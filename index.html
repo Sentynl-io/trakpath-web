@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrakPath | The Intelligence Layer for Global Trade</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-panel: #111827;
+            --accent-blue: #00D2FF;
+            --accent-dark: #3A7BD5;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(11, 15, 25, 0.9);
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            z-index: 100;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--accent-blue); }
+        
+        /* Buttons */
+        .btn {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-dark));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* Hero Section */
+        header {
+            text-align: center;
+            padding: 8rem 5% 6rem;
+            background: radial-gradient(circle at top, #1a2a42 0%, var(--bg-dark) 70%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+        h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; }
+        .highlight { background: -webkit-linear-gradient(0deg, var(--accent-blue), var(--accent-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.hero-sub { font-size: 1.25rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 2.5rem; }
+        
+        /* Features Grid */
+        .features { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .card {
+            background: var(--bg-panel);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); border-color: rgba(0, 210, 255, 0.3); }
+        .card h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--accent-blue); }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Architecture Section with Diagram */
+        .architecture { background: var(--bg-panel); padding: 5rem 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .arch-content { max-width: 900px; margin: 0 auto; }
+        .arch-content h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .arch-content p { color: var(--text-muted); margin-bottom: 1rem; font-size: 1.1rem; }
+        .arch-emphasis { color: var(--text-main); font-weight: 600; font-size: 1.2rem; margin-bottom: 3rem; }
+        
+        /* Flowchart Diagram Styles */
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .diagram-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .node {
+            background: var(--bg-dark);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .node:hover {
+            background: rgba(0, 210, 255, 0.1);
+            transform: scale(1.05);
+            border-color: var(--accent-blue);
+        }
+        .node-center {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(58, 123, 213, 0.2));
+            border: 2px solid var(--accent-blue);
+            padding: 1.5rem 2rem;
+            font-size: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            z-index: 2;
+            cursor: default;
+        }
+        .node-center:hover { transform: none; background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(58, 123, 213, 0.2)); }
+        
+        .node-universal {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px dashed var(--accent-blue);
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            display: inline-block;
+            border-radius: 50px;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* Modal (Popup) Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--bg-panel);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            background: none; border: none;
+            transition: color 0.2s;
+        }
+        .close-btn:hover { color: var(--text-main); }
+        .modal-title { font-size: 1.5rem; color: var(--accent-blue); margin-bottom: 1rem; font-weight: 800; }
+        .modal-body { color: var(--text-muted); line-height: 1.6; }
+        
+        /* Contact Form Styles */
+        .contact-info { margin-top: 1rem; }
+        .contact-info p { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-main); font-weight: 600;}
+        .contact-info span { color: var(--text-muted); font-weight: 400;}
+
+        /* Footer */
+        footer { text-align: center; padding: 3rem 5%; color: var(--text-muted); font-size: 0.875rem; }
+        footer p { margin-bottom: 0.5rem; }
+        .patent-notice { color: var(--accent-blue); font-weight: 600; }
+        /* Contact Form Styles */
+        .contact-intro { margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.5; }
+        .contact-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 1rem; 
+            margin-top: 1rem; 
+        }
+        .contact-card {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            padding: 1.25rem;
+            border-radius: 8px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .contact-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 210, 255, 0.4);
+        }
+        .contact-card h4 { 
+            color: var(--text-main); 
+            font-size: 1.1rem; 
+            margin-bottom: 0.75rem; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding-bottom: 0.5rem; 
+        }
+        .contact-card p { 
+            font-size: 0.85rem; 
+            margin-bottom: 0.4rem; 
+            color: var(--text-muted); 
+            display: flex; 
+            justify-content: space-between;
+        }
+        .contact-card a { 
+            color: var(--accent-blue); 
+            text-decoration: none; 
+            font-weight: 600;
+        }
+        .contact-card a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) { 
+            h1 { font-size: 2.5rem; } 
+            .diagram-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+            Trak<span>Path</span>
+        </div>
+        <div>
+            <button class="btn open-modal" data-modal="contact" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Contact Us</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-badge">Solving the $184B Supply Chain Data Gap</div>
+        <h1>The Intelligence Layer <br>for <span class="highlight">Global Trade</span></h1>
+        <p class="hero-sub">TrakPath transforms static identifiers into infinitely expandable digital twins. Automated hydration, zero-training UX, and append-only provenance for the modern enterprise.</p>
+        <a href="#features" class="btn">Explore the Architecture</a>
+    </header>
+
+    <section id="features" class="features">
+        <h2 class="section-title">Beyond Static Provenance</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Patent-Pending Hydration Engine</h3>
+                <p>We decouple physical labels from data growth. Scan a single TrakPath code, and our engine automatically pulls real-time context like physical location, handling history, and state/federal regulations. Infinite data, zero re-labeling.</p>
+            </div>
+            <div class="card">
+                <h3>Append-Only Provenance</h3>
+                <p>Trust is mathematically verified. Every hydrated state change is cryptographically anchored to an immutable ledger. We provide a trust-less audit trail that eliminates regulatory risk and satisfies the strictest compliance mandates.</p>
+            </div>
+            <div class="card">
+                <h3>Mobile-First ROI</h3>
+                <p>No expensive proprietary hardware or complex tech training required. TrakPath delivers a Consumer-Grade "Scan-and-Go" experience that turns a 5-minute manual compliance chore into a 2-second automated workflow.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="architecture">
+        <div class="arch-content">
+            <h2>Modular by Design. Built to Scale.</h2>
+            <p>Our architecture allows enterprises to hot-swap compliance rules without incurring architectural debt. Whether it's tracking state-by-state cannabis regulations, verifying kratom sourcing, or validating the authenticity of a luxury watch, TrakPath is the central hub.</p>
+            <p class="arch-emphasis">Click an industry below to see how the Hydration Engine solves its specific friction.</p>
+            
+            <div class="diagram-container">
+                <div class="diagram-column">
+                    <button class="node open-modal" data-modal="thc">🌿 Regulated THC</button>
+                    <button class="node open-modal" data-modal="kratom">🍃 Kratom Supply</button>
+                    <button class="node open-modal" data-modal="pharma">🧬 Peptides & Pharma</button>
+                </div>
+                
+                <div class="node node-center">
+                    📱 TrakPath Mobile App<br>
+                    <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">& Patent-Pending Engine</span>
+                </div>
+                
+                <div class="diagram-column">
+                    <button class="node open-modal" data-modal="luxury">💎 Luxury Goods</button>
+                    <button class="node open-modal" data-modal="mining">⛏️ Mining & Minerals</button>
+                    <button class="node open-modal" data-modal="freight">📦 High-Value Freight</button>
+                </div>
+            </div>
+            
+            <div class="node-universal">
+                ♾️ Universal Architecture: We Can Track Anything
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 TrakPath LLC. All rights reserved.</p>
+        <p class="patent-notice">U.S. Patent Pending (App No: 63/998,678) | Dynamic Identifier Hydration Engine</p>
+    </footer>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">&times;</button>
+            <h3 class="modal-title" id="modalTitle">Title</h3>
+            <div class="modal-body" id="modalBody">Body content goes here.</div>
+        </div>
+    </div>
+
+    <script>
+        // Data for our popups
+        // Data for our popups
+        const modalData = {
+            contact: {
+                title: "Executive Team",
+                body: `<p class="contact-intro">Ready to deploy the Hydration Engine? Contact our executive team to schedule a technical demo or discuss investment opportunities.</p>
+                       <div class="contact-grid">
+                           <div class="contact-card">
+                               <h4>Josh McIver</h4>
+                               <p>Email: <a href="mailto:josh@mijory.com">josh@mijory.com</a></p>
+                               <p>Phone: <a href="tel:+12089008666">(208) 900-8666</a></p>
+                               <p>Location: <span>Meridian, ID</span></p>
+                           </div>
+                           <div class="contact-card">
+                               <h4>Ryan Pacheco</h4>
+                               <p>Email: <a href="mailto:ryan@mijory.com">ryan@mijory.com</a></p>
+                               <p>Phone: <a href="tel:+12089954681">(208) 995-4681</a></p>
+                               <p>Location: <span>Meridian, ID</span></p>
+                           </div>
+                           <div class="contact-card">
+                               <h4>Mike Larsen</h4>
+                               <p>Email: <a href="mailto:mike@mijory.com">mike@mijory.com</a></p>
+                               <p>Phone: <a href="tel:+12087035465">(208) 703-5465</a></p>
+                               <p>Location: <span>Meridian, ID</span></p>
+                           </div>
+                           <div class="contact-card">
+                               <h4>Gaby Larsen</h4>
+                               <p>Email: <a href="mailto:gaby@mijory.com">gaby@mijory.com</a></p>
+                               <p>Phone: <a href="tel:+12087035465">(208) 602-0894</a></p>
+                               <p>Location: <span>Meridian, ID</span></p>
+                           </div>
+                       </div>`
+            },
+            thc: {
+                title: "🌿 Regulated THC",
+                body: "State-by-state compliance doesn't have to be a bottleneck. TrakPath streamlines the entire product lifecycle by automating audits, compliance reporting, and recall readiness in real-time. We turn heavy regulatory friction into a seamless, mobile-first operational asset."
+            },
+            kratom: {
+                title: "🍃 Kratom Supply Chain",
+                body: "A rapidly growing, fragmented market demands verified sourcing. Provide undeniable proof of origin, processing history, and lab-tested safety to both vendors and consumers directly via a simple smartphone scan."
+            },
+            pharma: {
+                title: "🧬 Peptides & Pharma",
+                body: "Achieve unit-level DSCSA compliance without the architectural debt. Track temperature excursions and custody chains with mathematical certainty using our append-only provenance layer. No proprietary hardware required."
+            },
+            luxury: {
+                title: "💎 Luxury Goods Authentication",
+                body: "Defeat counterfeiting instantly. Empower buyers to verify the authentic digital birth certificate and immutable ownership history of high-end watches, fashion, and collectibles with a single tap of their smartphone."
+            },
+            mining: {
+                title: "⛏️ Mining & Minerals",
+                body: "From conflict-free mineral verification to bulk ore logistics, TrakPath provides an unbreakable digital thread from the initial extraction site all the way to the final manufacturer."
+            },
+            freight: {
+                title: "📦 High-Value Freight",
+                body: "Eliminate blind spots in transit. Automate custody transfers and condition monitoring across disparate carriers, ensuring absolute accountability and rapid reconciliation at every handoff."
+            }
+        };
+
+        // DOM Elements
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeModalBtn = document.getElementById('closeModal');
+        const openButtons = document.querySelectorAll('.open-modal');
+
+        // Open Modal Logic
+        openButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetKey = button.getAttribute('data-modal');
+                const data = modalData[targetKey];
+                
+                if(data) {
+                    modalTitle.innerHTML = data.title;
+                    modalBody.innerHTML = data.body;
+                    modalOverlay.classList.add('active');
+                }
+            });
+        });
+
+        // Close Modal Logic
+        const closeModal = () => {
+            modalOverlay.classList.remove('active');
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        // Close if clicking outside the content box
+        modalOverlay.addEventListener('click', (e) => {
+            if(e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
