@@ -1,514 +1,723 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrakPath | Sovereign Digital Infrastructure</title>
-
+    <title>TrakPath | Real-Time Supply Chain Hydration & Verified Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #020617;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #1e3a8a;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
-        }
-
-        html {
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: #f8fafc;
             scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            top: -10vw;
+            right: -10vw;
+            z-index: -1;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .comparison-table td, .comparison-table th {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .highlight-col {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 1px solid rgba(59, 130, 246, 0.3);
+            border-right: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .step-node {
+            position: relative;
+        }
+        .step-node::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 2rem;
+            background: rgba(59, 130, 246, 0.3);
+        }
+        .step-node:last-child::after { display: none; }
+
+        /* Modal Specific CSS - Stripped of all laggy animations for instant snapping */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; z-index: 1000;
+            display: none; padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--dark); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 1rem;
+            width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto;
         }
     </style>
 </head>
+<body class="overflow-x-hidden">
 
-<body class="bg-slate-950 text-slate-200 antialiased selection:bg-cyan-500/30">
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-route text-white"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight">Trak<span class="text-blue-500">Path</span></span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <button onclick="switchTab('features')" class="nav-link px-2 py-1 hover:text-blue-400 transition">Features</button>
+                <button onclick="switchTab('hydration')" class="nav-link px-2 py-1 hover:text-blue-400 transition">Hydration Engine</button>
+                <button onclick="switchTab('coc')" class="nav-link px-2 py-1 hover:text-blue-400 transition text-emerald-400">Chain of Custody</button>
+                <button onclick="switchTab('comparison')" class="nav-link px-2 py-1 hover:text-blue-400 transition">Comparison</button>
+                <button onclick="switchTab('compliance')" class="nav-link px-2 py-1 hover:text-blue-400 transition">Compliance</button>
+            </div>
+            <button onclick="openModal('contact')" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+                Contact Team
+            </button>
+        </div>
+    </nav>
 
-    <div id="root"></div>
+    <main id="home" class="tab-content active pt-32 pb-20 px-6">
+        <div class="hero-glow"></div>
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 px-4 py-1 rounded-full text-xs font-bold mb-6">
+                <i class="fas fa-shield-alt"></i>
+                <span>NEXT-GEN SUPPLY CHAIN AGILITY</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Traceability That <br>
+                <span class="gradient-text">Enforces Truth</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                TrakPath is the only platform that uses a **Hydration Engine** to verify compliance *before* the next step in the supply chain. Zero hardware. Infinite updates. Total certainty.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button onclick="switchTab('coc')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-xl shadow-emerald-500/30">
+                    See Chain of Custody Solution
+                </button>
+                <button onclick="switchTab('hydration')" class="glass hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition border border-slate-700">
+                    How Hydration Works
+                </button>
+            </div>
+            
+            <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50 grayscale hover:grayscale-0 transition duration-500">
+                <div class="flex items-center justify-center font-bold text-xl"><i class="fas fa-pills mr-2"></i> PHARMA</div>
+                <div class="flex items-center justify-center font-bold text-xl"><i class="fas fa-leaf mr-2"></i> CANNABIS</div>
+                <div class="flex items-center justify-center font-bold text-xl"><i class="fas fa-apple-alt mr-2"></i> FOOD SAFETY</div>
+                <div class="flex items-center justify-center font-bold text-xl"><i class="fas fa-flask mr-2"></i> LABS</div>
+            </div>
+        </div>
+    </main>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <section id="features" class="tab-content pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-16 text-center">Core Technical <span class="text-blue-500">Differentiation</span></h2>
+            <div class="grid md:grid-cols-3 gap-8 mb-20">
+                <div class="glass p-8 rounded-3xl border border-slate-800">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Hybrid Architecture</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">We combine a high-speed relational layer for 1M+ writes/sec with strategic blockchain anchoring. You get consumer-grade speed with institutional-grade cryptographic proof.</p>
+                </div>
+                <div class="glass p-8 rounded-3xl border border-slate-800">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-purple-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Zero-Friction Hardware</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">No expensive scanners, RFID, or IoT sensors required. TrakPath runs on any standard smartphone, turning your team's existing devices into powerful compliance tools.</p>
+                </div>
+                <div class="glass p-8 rounded-3xl border border-slate-800">
+                    <div class="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-sync text-2xl text-emerald-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Infinite Sync</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Offline-first capability ensures your field workers can record data in remote areas. TrakPath resolves conflicts deterministically once connection is restored.</p>
+                </div>
+            </div>
 
-        // --- UI Icons ---
-        const IconBase = ({ children, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
-        );
-        const QrCode = ({ className }) => <IconBase className={className}><rect width="5" height="5" x="3" y="3" rx="1" /><rect width="5" height="5" x="16" y="3" rx="1" /><rect width="5" height="5" x="3" y="16" rx="1" /><path d="M21 16h-3a2 2 0 0 0-2 2v3" /><path d="M21 21v.01" /><path d="M12 7v3a2 2 0 0 1-2 2H7" /><path d="M3 12h.01" /><path d="M12 3h.01" /><path d="M12 16v.01" /><path d="M16 12h1" /><path d="M21 12v.01" /><path d="M12 21v-1" /></IconBase>;
-        const Database = ({ className }) => <IconBase className={className}><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></IconBase>;
-        const ShieldCheck = ({ className }) => <IconBase className={className}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.8 2a1 1 0 0 1 .5.89z" /><path d="m9 12 2 2 4-4" /></IconBase>;
-        const Smartphone = ({ className }) => <IconBase className={className}><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /><path d="M12 18h.01" /></IconBase>;
-        const Microscope = ({ className }) => <IconBase className={className}><path d="M6 18h8" /><path d="M3 22h18" /><path d="M14 22a7 7 0 1 0 0-14h-1" /><path d="M9 14h2" /><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" /><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" /></IconBase>;
-        const MapPin = ({ className }) => <IconBase className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></IconBase>;
-        const FileText = ({ className }) => <IconBase className={className}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></IconBase>;
-        const Activity = ({ className }) => <IconBase className={className}><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></IconBase>;
-        const AlertTriangle = ({ className }) => <IconBase className={className}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></IconBase>;
-        const CheckCircle2 = ({ className }) => <IconBase className={className}><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></IconBase>;
-        const TrendingUp = ({ className }) => <IconBase className={className}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></IconBase>;
-        const ArrowRight = ({ className }) => <IconBase className={className}><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></IconBase>;
-        const XIcon = ({ className }) => <IconBase className={className}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></IconBase>;
+            <div class="border-t border-slate-800 pt-20">
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-lg text-slate-300 mb-12 leading-relaxed">
+                        TrakPath stands out through its patent-pending <span class="text-blue-400 font-bold">Hydration Engine</span>, which solves the common "Static Data Problem" by turning a simple printed QR code into a living, always-current digital passport. It dynamically reconstructs the product's full provenance, purity, chain-of-custody, and compliance status at the exact moment of every scan.
+                    </p>
 
-        // --- Modal Data Definitions ---
-        const MODAL_CONTENT = {
-            contact: {
-                title: "Executive Team",
-                body: (
-                    <div className="space-y-6">
-                        <p className="text-slate-300">Ready to deploy the Hydration Engine? Contact our executive team to schedule a technical demo or discuss investment opportunities.</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {[
-                                { name: 'Josh McIver', email: 'josh@mijory.com', phone: '(208) 900-8666' },
-                                { name: 'Ryan Pacheco', email: 'ryan@mijory.com', phone: '(208) 995-4681' },
-                                { name: 'Mike Larsen', email: 'mike@mijory.com', phone: '(208) 703-5465' },
-                                { name: 'Gaby Larsen', email: 'gaby@mijory.com', phone: '(208) 602-0894' }
-                            ].map(person => (
-                                <div key={person.name} className="p-4 bg-slate-950/50 border border-cyan-900/50 rounded-xl hover:border-cyan-500/50 transition-colors">
-                                    <h4 className="text-white font-bold mb-2 pb-2 border-b border-slate-800">{person.name}</h4>
-                                    <div className="space-y-2 text-sm text-slate-400">
-                                        <div className="flex justify-between items-center gap-2">
-                                            <span className="text-slate-500">Email:</span> 
-                                            <a href={`mailto:${person.email}`} className="text-cyan-400 hover:text-cyan-300 hover:underline truncate">{person.email}</a>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <span className="text-slate-500">Phone:</span> 
-                                            <a href={`tel:${person.phone.replace(/\D/g,'')}`} className="text-cyan-400 hover:text-cyan-300 hover:underline">{person.phone}</a>
-                                        </div>
-                                        <div className="flex justify-between items-center gap-2">
-                                            <span className="text-slate-500">Location:</span> 
-                                            <span className="text-slate-300 text-right">Meridian, ID</span>
-                                        </div>
-                                    </div>
+                    <div class="space-y-16">
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <span class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xs mr-4">01</span>
+                                <h3 class="text-2xl font-bold">Real-Time Dynamic Data Reconstruction ("Hydration")</h3>
+                            </div>
+                            <p class="text-slate-400 mb-6 leading-relaxed">Most legacy systems treat a QR code or serialized identifier as a pointer to a fixed, historical record. Once data is written (e.g., lab results, location, or status), updating it often requires new entries, manual reconciliation, or even physical relabeling.</p>
+                            <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-800">
+                                <p class="text-sm text-slate-300"><strong class="text-blue-400">TrakPath's edge:</strong> The Hydration Engine continuously ingests data from multiple sources (LIMS, ERP, regulatory rules engines, field scans/GPS/photos) and <span class="italic">reconstructs the ground-truth state live</span> at scan time. This delivers the most current compliance view and timeline without any changes to the physical label.</p>
+                                <p class="text-xs text-slate-500 mt-4">Traditional enterprise ledgers are strong at recording immutable events but generally deliver static snapshots rather than instant reconstruction.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <span class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xs mr-4">02</span>
+                                <h3 class="text-2xl font-bold">Proactive, Built-in Regulatory Guardrails</h3>
+                            </div>
+                            <p class="text-slate-400 mb-6 leading-relaxed">TrakPath embeds state-specific rules engines that automatically enforce compliance before any next step in the supply chain (e.g., transfer, processing, or release) can proceed.</p>
+                            <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-800">
+                                <p class="text-sm text-slate-300"><strong class="text-blue-400">TrakPath's edge:</strong> If a product fails current jurisdictional requirements, the system flags it immediately. When regulations change, the new rules apply instantly to all existing inventory — no manual reprogramming needed.</p>
+                                <p class="text-xs text-slate-500 mt-4">First-generation compliance software typically offers reactive reporting. They rarely provide automatic enforcement checkpoints before workflow advancement.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <span class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xs mr-4">03</span>
+                                <h3 class="text-2xl font-bold">Infinite Updates Without Relabeling</h3>
+                            </div>
+                            <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-800">
+                                <p class="text-sm text-slate-300"><strong class="text-blue-400">TrakPath's edge:</strong> Producers can update lab results, destinations, batch status, or compliance data at any time. The physical QR code remains unchanged for the product's entire life, eliminating costly reprinting, design work, plate changes, and inventory waste.</p>
+                                <p class="text-xs text-slate-500 mt-4">Platform decoupling of the physical anchor from the live data layer makes updates truly frictionless compared to reconciliation efforts on other platforms.</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <span class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xs mr-4">04</span>
+                                <h3 class="text-2xl font-bold">Hybrid Architecture Optimized for Speed + Proof</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-6 bg-blue-600/5 rounded-2xl border border-blue-500/20">
+                                    <div class="font-bold text-blue-400 mb-2">Relational Layer</div>
+                                    <p class="text-xs text-slate-400">High-speed reconstruction for zero-latency scans, supporting >1,000,000 writes per second. Consumer-grade performance.</p>
                                 </div>
-                            ))}
+                                <div class="p-6 bg-emerald-600/5 rounded-2xl border border-emerald-500/20">
+                                    <div class="font-bold text-emerald-400 mb-2">Ledger Layer</div>
+                                    <p class="text-xs text-slate-400">Periodic public blockchain anchoring of cryptographic proofs. Tamper-evident provenance without "gas fee" issues.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-20 glass p-10 rounded-3xl border border-slate-700">
+                            <h3 class="text-2xl font-bold mb-6 text-center">Summary of Positioning</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="w-32 flex-shrink-0 font-bold text-blue-400 text-sm">TrakPath</div>
+                                    <div class="text-sm text-slate-300">Ideal for companies needing lightweight, future-proof, proactive compliance with minimal disruption and cost.</div>
+                                </div>
+                                <div class="flex items-start opacity-60">
+                                    <div class="w-32 flex-shrink-0 font-bold text-slate-400 text-sm">Traditional Enterprise Ledgers</div>
+                                    <div class="text-sm text-slate-400">Excels at immutable multi-party documentation, but struggles with real-time field agility.</div>
+                                </div>
+                                <div class="flex items-start opacity-60">
+                                    <div class="w-32 flex-shrink-0 font-bold text-slate-400 text-sm">1st-Gen Track & Trace</div>
+                                    <div class="text-sm text-slate-400">Strong for heavy regulatory reporting, but often requires expensive proprietary hardware and limits dynamic updates.</div>
+                                </div>
+                            </div>
+                            <div class="mt-10 pt-6 border-t border-slate-800 text-center">
+                                <p class="text-slate-400 italic text-sm">The core theme: While many solutions focus on recording "what happened," TrakPath focuses on delivering the always-current truth efficiently, with built-in prevention of compliance issues.</p>
+                            </div>
                         </div>
                     </div>
-                )
-            },
-            thc: {
-                title: "🌿 Regulated THC",
-                body: <p>State-by-state compliance doesn't have to be a bottleneck. TrakPath streamlines the entire track-and-trace lifecycle by automating audits, compliance reporting, and recall readiness in real-time. We turn heavy regulatory friction into a seamless, mobile-first operational asset.</p>
-            },
-            kratom: {
-                title: "🍃 Kratom Supply Chain",
-                body: <p>A rapidly growing, fragmented market demands verified sourcing. Provide undeniable proof of origin, processing history, and lab-tested safety to both vendors and consumers directly via a simple smartphone scan.</p>
-            },
-            pharma: {
-                title: "🧬 Peptides & Pharma",
-                body: <p>Achieve unit-level DSCSA compliance without the architectural debt. Track temperature excursions and custody chains with mathematical certainty using our append-only provenance layer. No proprietary hardware required.</p>
-            },
-            luxury: {
-                title: "💎 Luxury Goods Authentication",
-                body: <p>Defeat counterfeiting instantly. Empower buyers to verify the authentic digital birth certificate and immutable ownership history of high-end watches, fashion, and collectibles with a single tap of their smartphone.</p>
-            },
-            mining: {
-                title: "⛏️ Mining & Minerals",
-                body: <p>From conflict-free mineral verification to bulk ore logistics, TrakPath provides an unbreakable digital thread from the initial extraction site all the way to the final manufacturer.</p>
-            },
-            freight: {
-                title: "📦 High-Value Freight",
-                body: <p>Eliminate blind spots in transit. Automate custody transfers and condition monitoring across disparate carriers, ensuring absolute accountability and rapid reconciliation at every handoff.</p>
+                </div>
+
+                <div class="mt-32 pt-20 border-t border-slate-800 text-center relative z-10">
+                    <h2 class="text-4xl font-extrabold mb-4">Modular by Design. Built to Scale.</h2>
+                    <p class="text-slate-400 text-lg max-w-3xl mx-auto mb-10">
+                        Our architecture allows enterprises to hot-swap compliance rules without incurring architectural debt. Whether it's tracking state-by-state regulations, verifying kratom sourcing, or validating the authenticity of a luxury watch, TrakPath is the central hub.
+                    </p>
+                    <p class="text-blue-400 font-bold mb-12">
+                        Click an industry below to see how the Hydration Engine solves its specific friction.
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12">
+                        <div class="flex flex-col gap-4 w-full md:w-64">
+                            <button onclick="openModal('thc')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">🌿 Regulated THC</button>
+                            <button onclick="openModal('kratom')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">🍃 Kratom Supply</button>
+                            <button onclick="openModal('pharma')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">🧬 Peptides & Pharma</button>
+                        </div>
+                        
+                        <div class="bg-gradient-to-br from-blue-900/40 to-slate-900 border-2 border-blue-500 p-10 rounded-3xl shadow-[0_0_40px_rgba(59,130,246,0.2)] max-w-xs w-full">
+                            <i class="fas fa-mobile-alt text-5xl text-blue-400 mb-6"></i>
+                            <div class="text-2xl font-bold text-white mb-2">TrakPath Mobile App</div>
+                            <div class="text-sm font-medium text-blue-200/70">& Patent-Pending Engine</div>
+                        </div>
+                        
+                        <div class="flex flex-col gap-4 w-full md:w-64">
+                            <button onclick="openModal('luxury')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">💎 Luxury Goods</button>
+                            <button onclick="openModal('mining')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">⛏️ Mining & Minerals</button>
+                            <button onclick="openModal('freight')" class="p-5 bg-slate-900 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 hover:border-blue-400 hover:-translate-y-1 transition text-left md:text-center font-bold text-slate-200 shadow-lg">📦 High-Value Freight</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-16 inline-block px-8 py-4 rounded-full border border-dashed border-blue-500/50 text-blue-400 font-bold bg-slate-900/50 backdrop-blur-sm shadow-xl">
+                        ♾️ Universal Architecture: We Can Track Anything
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="hydration" class="tab-content pt-32 pb-20 px-6 bg-slate-900/40">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 px-4 py-1 rounded-full text-xs font-bold mb-4">
+                    <i class="fas fa-file-signature"></i>
+                    <span>U.S. Patent App No. 63/998,678</span>
+                </div>
+                <h2 class="text-4xl font-bold mb-4 text-blue-400">The Patent-Pending Hydration Engine</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">Why static tracking is dead and real-time reconstruction is the future.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border-l-4 border-blue-500">
+                        <h4 class="text-xl font-bold mb-2">Decoupled physical & digital</h4>
+                        <p class="text-slate-400">The physical QR code is just an anchor. The "Hydration" happens at the moment of scan, pulling live data from ERP, LIMS, and regulatory APIs.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border-l-4 border-purple-500">
+                        <h4 class="text-xl font-bold mb-2">Hybrid Relational & Ledger Security</h4>
+                        <p class="text-slate-400">We combine the cryptographic, tamper-evident security of an immutable blockchain ledger with the sub-second speed and scale of a traditional relational database.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800/50 rounded-2xl border-l-4 border-emerald-500">
+                        <h4 class="text-xl font-bold mb-2">Zero Latency Operations</h4>
+                        <p class="text-slate-400">Unlike pure blockchain solutions, our engine delivers sub-second response times, making it viable for high-volume retail and logistics environments.</p>
+                    </div>
+                </div>
+                <div class="relative glass p-10 rounded-3xl border border-blue-500/20">
+                    <div class="absolute -top-6 -left-6 bg-blue-600 text-white font-bold px-4 py-2 rounded-lg">HYDRATION IN PROGRESS</div>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4 p-4 bg-white/5 rounded-xl">
+                            <i class="fas fa-barcode text-blue-400 text-2xl"></i>
+                            <div class="flex-grow h-2 bg-slate-700 rounded-full overflow-hidden">
+                                <div class="w-1/3 h-full bg-blue-500 animate-pulse"></div>
+                            </div>
+                            <span class="text-xs font-mono">SCAN_ID: TP-882</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-blue-500/10 rounded-xl text-center border border-blue-500/20">
+                                <div class="text-xs text-blue-400 mb-1">DATA INGEST</div>
+                                <div class="font-bold text-sm">LIMS Results</div>
+                            </div>
+                            <div class="p-4 bg-purple-500/10 rounded-xl text-center border border-purple-500/20">
+                                <div class="text-xs text-purple-400 mb-1">LEDGER STATUS</div>
+                                <div class="font-bold text-sm">Anchored & Verified</div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-center">
+                            <div class="text-emerald-400 font-bold">✓ HYDRATED & VERIFIED</div>
+                            <div class="text-xs text-emerald-300 mt-1">Ready for Next Supply Chain Step</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="coc" class="tab-content pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-start">
+                <div>
+                    <span class="text-emerald-400 font-bold tracking-widest uppercase text-sm">Specialized Solution</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mt-4 mb-8">Secure Sample <br><span class="text-emerald-500">Chain of Custody</span></h2>
+                    
+                    <div class="space-y-8">
+                        <div class="glass p-6 rounded-2xl border-l-4 border-red-500">
+                            <h4 class="text-lg font-bold text-red-400 mb-2">The Lab Blind Spot</h4>
+                            <p class="text-slate-400 text-sm">Labs face $300k to $2M in fines for data they can't verify. "Lab shopping" and sample tampering happen in the gap between the field and the lab door where LIMS doesn't reach.</p>
+                        </div>
+                        
+                        <div class="relative pl-8 border-l-2 border-emerald-500/30 space-y-12 py-4">
+                            <div class="step-node">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
+                                <h5 class="font-bold text-lg mb-1">1. Anchored Collection</h5>
+                                <p class="text-slate-400 text-sm">Submitter captures sample. TrakPath instantly anchors a photo + GPS coordinates to the batch QR code. The "witness" is born.</p>
+                            </div>
+                            <div class="step-node">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
+                                <h5 class="font-bold text-lg mb-1">2. Lab In-Take Scan</h5>
+                                <p class="text-slate-400 text-sm">Lab tech scans the sample on arrival. They instantly see the original collection photo and GPS to confirm a match. No more "blind" trust.</p>
+                            </div>
+                            <div class="step-node">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
+                                <h5 class="font-bold text-lg mb-1">3. LIMS Integration</h5>
+                                <p class="text-slate-400 text-sm">The lab runs tests in their existing LIMS. TrakPath doesn't replace software; it wraps it in an external trust layer.</p>
+                            </div>
+                            <div class="step-node">
+                                <div class="absolute -left-[41px] w-4 h-4 rounded-full bg-emerald-500 border-4 border-slate-900"></div>
+                                <h5 class="font-bold text-lg mb-1">4. The Verified Journey</h5>
+                                <p class="text-slate-400 text-sm">Retailers and regulators scan the final product to see a tamper-proof, visual timeline from the exact moment of collection to the COA approval.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass p-8 rounded-3xl sticky top-32">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <i class="fas fa-map-marked-alt text-emerald-500 mr-3"></i>
+                        The Verified Journey UI
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-800 rounded-xl flex items-center justify-between border border-slate-700">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-emerald-500/20 rounded flex items-center justify-center">
+                                    <i class="fas fa-camera text-emerald-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-500">FIELD COLLECTION</div>
+                                    <div class="text-sm font-bold">Batch #A-401</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[10px] text-emerald-400 font-mono">GPS: 44.0582° N</div>
+                                <div class="text-[10px] text-slate-500">10:42 AM</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center"><i class="fas fa-arrow-down text-slate-700"></i></div>
+                        <div class="p-4 bg-slate-800 rounded-xl flex items-center justify-between border border-emerald-500/30">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-500/20 rounded flex items-center justify-center">
+                                    <i class="fas fa-flask text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-500">LAB IN-TAKE</div>
+                                    <div class="text-sm font-bold">PureLabs PDX</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[10px] text-blue-400 font-bold">MATCH CONFIRMED</div>
+                                <div class="text-[10px] text-slate-500">02:15 PM</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center"><i class="fas fa-arrow-down text-slate-700"></i></div>
+                        <div class="p-4 bg-emerald-600 rounded-xl flex items-center justify-between shadow-lg shadow-emerald-500/20">
+                            <div class="flex items-center space-x-3 text-white">
+                                <i class="fas fa-certificate text-xl"></i>
+                                <div class="text-sm font-bold tracking-tight">COA ISSUED & ANCHORED</div>
+                            </div>
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 p-4 bg-slate-900/80 rounded-xl border border-slate-700">
+                        <div class="text-xs font-bold text-slate-500 uppercase mb-2">Eliminated Risks</div>
+                        <ul class="text-xs space-y-2 text-slate-400">
+                            <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i> Lab Shopping (Duplication)</li>
+                            <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i> Sample Tampering/Substitution</li>
+                            <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i> Audit Record Failures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison" class="tab-content pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Unfair Competitive Advantage</h2>
+                <p class="text-slate-400">Comparing the TrakPath Hydration model against 1st-generation traceability.</p>
+            </div>
+            
+            <div class="overflow-x-auto rounded-3xl glass border border-slate-800">
+                <table class="w-full text-left comparison-table min-w-[900px]">
+                    <thead>
+                        <tr class="bg-slate-800/40">
+                            <th>Dimension</th>
+                            <th class="highlight-col text-blue-400 font-extrabold">TrakPath (Hydrated)</th>
+                            <th class="text-slate-500">Legacy ERP / LIMS</th>
+                            <th class="text-slate-500">Pure Blockchain</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td class="font-bold">Real-Time Reconstruction</td>
+                            <td class="highlight-col"><i class="fas fa-bolt text-blue-400 mr-2"></i> Yes (at scan time)</td>
+                            <td>No (Static/Database)</td>
+                            <td>Partial (Historical only)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Updates Without Relabeling</td>
+                            <td class="highlight-col">Infinite & Instant</td>
+                            <td>Requires reprint/new manifest</td>
+                            <td>Requires new on-chain event</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Regulatory Guardrails</td>
+                            <td class="highlight-col font-bold text-emerald-400">Proactive (Prevents Moves)</td>
+                            <td>Manual / Reactive</td>
+                            <td>Inflexible Smart Contracts</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Hardware Cost</td>
+                            <td class="highlight-col">$0 (BYOD Smartphone)</td>
+                            <td>High (Specialized Scanners)</td>
+                            <td>Moderate (IoT required)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Time to Audit</td>
+                            <td class="highlight-col">2 Seconds (One Scan)</td>
+                            <td>Hours / Days (Manual search)</td>
+                            <td>Minutes (Query time)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="compliance" class="tab-content pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative order-2 md:order-1">
+                    <div class="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full"></div>
+                    <div class="relative glass p-8 rounded-3xl border border-blue-500/20">
+                        <h4 class="text-xl font-bold mb-6 flex items-center">
+                            <i class="fas fa-balance-scale text-blue-500 mr-3"></i>
+                            Regulatory Rule Engine
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center text-sm p-3 bg-slate-800 rounded-lg">
+                                <span>Batch Potency &lt; 0.3% THC</span>
+                                <span class="text-emerald-400 font-bold">PASS</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm p-3 bg-slate-800 rounded-lg">
+                                <span>Pesticide Clearance</span>
+                                <span class="text-emerald-400 font-bold">PASS</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                                <span>Transfer Permit Valid</span>
+                                <span class="text-red-400 font-bold">MISSING</span>
+                            </div>
+                            <div class="mt-6 p-4 bg-red-600 rounded-xl text-center font-bold animate-pulse">
+                                ACTION BLOCKED: INCOMPLETE COMPLIANCE
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <h2 class="text-4xl font-bold mb-6">Proactive <span class="text-blue-500">Guardrails</span></h2>
+                    <p class="text-lg text-slate-400 mb-8">
+                        Most systems tell you what went wrong *after* the audit fails. TrakPath prevents the mistake from happening in the first place.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-lock text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Inventory Lockdown</h4>
+                                <p class="text-slate-400 text-sm">Product cannot be marked for transfer if the LIMS results haven't successfully "hydrated" into the record.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-globe-americas text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Jurisdictional Awareness</h4>
+                                <p class="text-slate-400 text-sm">Automatically toggle rules based on the GPS anchor of the scanning device. Moving from California to Arizona? The ruleset flips instantly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="tab-content pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto glass p-12 rounded-3xl border border-blue-500/20 text-center">
+            <h2 class="text-4xl font-bold mb-6">Stop Reacting. Start Enforcing.</h2>
+            <p class="text-slate-400 mb-10">Schedule a 15-minute technical deep dive into the Hydration Engine and our Chain of Custody solution.</p>
+            <form class="space-y-4">
+                <input type="text" placeholder="Full Name" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-6 py-4 focus:border-blue-500 outline-none text-white">
+                <input type="email" placeholder="Company Email" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-6 py-4 focus:border-blue-500 outline-none text-white">
+                <select class="w-full bg-slate-800 border border-slate-700 rounded-xl px-6 py-4 focus:border-blue-500 outline-none text-slate-400">
+                    <option>Interested in: Chain of Custody Solution</option>
+                    <option>Interested in: General Traceability</option>
+                    <option>Interested in: Pharma Compliance</option>
+                    <option>Interested in: Laboratory Partnership</option>
+                </select>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition">Request Demo</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 border-t border-slate-800 mt-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0 justify-center md:justify-start">
+                <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
+                    <i class="fas fa-route text-[10px] text-white"></i>
+                </div>
+                <span class="text-xl font-extrabold">Trak<span class="text-blue-500">Path</span></span>
+            </div>
+            <p class="text-slate-500 text-sm mb-4 md:mb-0">&copy; 2026 TrakPath Technologies. <span class="text-blue-400 font-semibold">U.S. Patent Pending (App No: 63/998,678)</span></p>
+            <div class="flex justify-center md:justify-end space-x-6 text-slate-500">
+                <i class="fab fa-linkedin hover:text-white cursor-pointer transition"></i>
+                <i class="fab fa-twitter hover:text-white cursor-pointer transition"></i>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center p-6 border-b border-slate-800">
+                <h3 id="modalTitle" class="text-2xl font-bold text-blue-400">Title</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div id="modalBody" class="p-6 overflow-y-auto text-slate-300 leading-relaxed">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Core Navigation Logic ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.replaceState(null, null, '#' + tabId);
+            }
+            
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => {
+                if(link.getAttribute('onclick').includes(tabId)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                switchTab(hash);
             }
         };
 
-
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('overview');
-            const [activeModal, setActiveModal] = useState(null);
-
-            // Prevent body scroll when modal is open
-            useEffect(() => {
-                if (activeModal) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = 'unset';
-                }
-                return () => document.body.style.overflow = 'unset';
-            }, [activeModal]);
-
-            return (
-                <div className="min-h-screen flex flex-col">
-
-                    {/* Navigation */}
-                    <nav className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-lg border-b border-slate-800">
-                        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-                            <div className="flex items-center gap-2 text-cyan-400 font-black text-2xl tracking-tighter cursor-pointer" onClick={() => setActiveTab('overview')}>
-                                <QrCode className="w-8 h-8" />
-                                TRAKPATH
-                            </div>
-                            
-                            {/* Center Tabs */}
-                            <div className="flex gap-2 overflow-x-auto hide-scrollbar flex-grow justify-center">
-                                <button
-                                    onClick={() => setActiveTab('overview')}
-                                    className={`px-4 py-2 text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'overview' ? 'bg-cyan-900/30 text-cyan-400 border border-cyan-500/50' : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'}`}
-                                >
-                                    Platform Overview
-                                </button>
-                                <button
-                                    onClick={() => setActiveTab('custody')}
-                                    className={`px-4 py-2 text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'custody' ? 'bg-cyan-900/30 text-cyan-400 border border-cyan-500/50' : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'}`}
-                                >
-                                    Lab Chain-of-Custody
-                                </button>
-                                <button
-                                    onClick={() => setActiveTab('market')}
-                                    className={`px-4 py-2 text-sm font-bold rounded-lg transition-all whitespace-nowrap ${activeTab === 'market' ? 'bg-cyan-900/30 text-cyan-400 border border-cyan-500/50' : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'}`}
-                                >
-                                    TAM & Engine Tech
-                                </button>
-                            </div>
-
-                            {/* Right Action */}
-                            <div>
-                                <button 
-                                    onClick={() => setActiveModal('contact')}
-                                    className="px-5 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:scale-105 transition-all text-sm"
-                                >
-                                    Contact Us
-                                </button>
-                            </div>
-                        </div>
-                    </nav>
-
-                    {/* Main Content Area */}
-                    <main className="flex-grow">
-
-                        {/* TAB 1: PLATFORM OVERVIEW */}
-                        {activeTab === 'overview' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                <section className="pt-24 pb-20 px-6 relative overflow-hidden text-center">
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-                                    <div className="max-w-4xl mx-auto relative z-10 space-y-6">
-                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-cyan-900/50 text-cyan-400 text-sm font-semibold mx-auto">
-                                            <ShieldCheck className="w-4 h-4" /> Sovereign Digital Infrastructure
-                                        </div>
-                                        <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
-                                            Keep the label fixed. <br />
-                                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Keep the state live.</span>
-                                        </h1>
-                                        <p className="text-xl text-slate-400 leading-relaxed pt-4">
-                                            TrakPath is the patent-pending intelligence layer for regulated supply chains. We turn compliance from a cost center into a verifiable trust advantage by bridging physical products to digital data assets.
-                                        </p>
-                                    </div>
-                                </section>
-
-                                <section className="py-16 px-6 max-w-7xl mx-auto border-t border-slate-800">
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                        <div className="p-8 rounded-2xl bg-slate-900 border border-slate-700 space-y-4">
-                                            <QrCode className="w-10 h-10 text-cyan-400" />
-                                            <h3 className="text-xl font-bold text-white">Dynamic Digital Twins</h3>
-                                            <p className="text-slate-400 text-sm leading-relaxed">
-                                                Our dual-layer architecture allows one permanent QR/barcode to stay with a regulated product for its entire lifecycle, reconstructing the product's current state and jurisdictional rules instantly upon scan.
-                                            </p>
-                                        </div>
-                                        <div className="p-8 rounded-2xl bg-slate-900 border border-slate-700 space-y-4">
-                                            <Database className="w-10 h-10 text-blue-400" />
-                                            <h3 className="text-xl font-bold text-white">Unassailable Provenance</h3>
-                                            <p className="text-slate-400 text-sm leading-relaxed">
-                                                By leveraging ImmuDB and Ethereum Layer 2 anchoring, we combine the speed of a normal operational database with the tamper-resistance of an append-only, immutable data ledger.
-                                            </p>
-                                        </div>
-                                        <div className="p-8 rounded-2xl bg-slate-900 border border-slate-700 space-y-4">
-                                            <Activity className="w-10 h-10 text-emerald-400" />
-                                            <h3 className="text-xl font-bold text-white">Automated Compliance</h3>
-                                            <p className="text-slate-400 text-sm leading-relaxed">
-                                                Lower relabeling costs, faster operations, safer recalls, and easier trust across suppliers, regulators, and retailers. TrakPath serves as the definitive third-party witness for your entire operation.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* MERGED SECTION: Architecture Interactive Nodes */}
-                                <section className="py-24 px-6 bg-slate-900/50 border-t border-slate-800 relative overflow-hidden">
-                                    <div className="max-w-6xl mx-auto text-center space-y-16 relative z-10">
-                                        
-                                        <div className="max-w-3xl mx-auto space-y-6">
-                                            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Modular by Design. Built to Scale.</h2>
-                                            <p className="text-xl text-slate-400">
-                                                Our architecture allows enterprises to hot-swap compliance rules without incurring architectural debt. TrakPath is the central hub for verified state changes.
-                                            </p>
-                                            <p className="text-cyan-400 font-semibold pt-2">
-                                                Click an industry below to see how the Hydration Engine solves its specific friction.
-                                            </p>
-                                        </div>
-
-                                        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
-                                            
-                                            {/* Left Nodes */}
-                                            <div className="flex flex-col gap-4 w-full md:w-64">
-                                                <button onClick={() => setActiveModal('thc')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">🌿 Regulated THC</button>
-                                                <button onClick={() => setActiveModal('kratom')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">🍃 Kratom Supply</button>
-                                                <button onClick={() => setActiveModal('pharma')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">🧬 Peptides & Pharma</button>
-                                            </div>
-
-                                            {/* Center Engine Node */}
-                                            <div className="bg-gradient-to-br from-cyan-900/40 to-blue-900/40 border-2 border-cyan-500 p-8 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.2)] max-w-xs w-full flex flex-col items-center text-center justify-center relative">
-                                                <Smartphone className="w-12 h-12 text-cyan-400 mb-4" />
-                                                <div className="text-2xl font-bold text-white mb-2">TrakPath Mobile App</div>
-                                                <div className="text-sm text-cyan-200/70 font-medium">& Patent-Pending Engine</div>
-                                            </div>
-
-                                            {/* Right Nodes */}
-                                            <div className="flex flex-col gap-4 w-full md:w-64">
-                                                <button onClick={() => setActiveModal('luxury')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">💎 Luxury Goods</button>
-                                                <button onClick={() => setActiveModal('mining')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">⛏️ Mining & Minerals</button>
-                                                <button onClick={() => setActiveModal('freight')} className="px-6 py-4 bg-slate-950 border border-cyan-900 rounded-xl text-slate-200 font-bold hover:bg-cyan-900/30 hover:border-cyan-400 hover:text-white hover:-translate-y-1 transition-all shadow-lg text-left md:text-center">📦 High-Value Freight</button>
-                                            </div>
-                                        </div>
-
-                                        <div className="inline-block px-8 py-4 rounded-full border border-dashed border-cyan-500/50 text-cyan-400 font-bold bg-cyan-950/50 backdrop-blur-sm shadow-xl">
-                                            ♾️ Universal Architecture: We Can Track Anything
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        )}
-
-                        {/* TAB 2: LAB CHAIN OF CUSTODY */}
-                        {activeTab === 'custody' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-7xl mx-auto px-6 py-16 space-y-20">
-
-                                {/* Header */}
-                                <div className="text-center max-w-3xl mx-auto space-y-4">
-                                    <h2 className="text-4xl font-extrabold text-white">LIMS Augmentation & Chain of Custody</h2>
-                                    <p className="text-xl text-slate-400">
-                                        Bridging the critical blind spot in regulated lab testing between the field and the laboratory door.
-                                    </p>
-                                </div>
-
-                                {/* The Problem */}
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                                    <div className="space-y-6">
-                                        <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                                            <AlertTriangle className="w-6 h-6 text-amber-500" /> The Hidden Crisis
-                                        </h3>
-                                        <ul className="space-y-4 text-slate-300">
-                                            <li className="flex gap-3">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2"></div>
-                                                <span>LIMS systems provide robust internal audit trails but suffer from absolute zero visibility before the sample reaches the lab doors.</span>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2"></div>
-                                                <span>Laboratories are forced to implicitly trust easily forged paper forms.</span>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2"></div>
-                                                <span>Lab shopping, sample tampering, and weak chain-of-custody protocols are critically common.</span>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2"></div>
-                                                <span>This leads to massive product recalls, severe regulatory fines ($300k to nearly $2M per incident), and irreversible loss of credibility.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="p-8 bg-slate-900 border border-slate-700 rounded-2xl">
-                                        <h4 className="font-bold text-white mb-4">The Asymmetric Risk</h4>
-                                        <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                                            Labs carry massive liability for data they cannot independently verify, and the toxic “test until you pass” culture persists.
-                                        </p>
-                                        <div className="p-4 bg-amber-900/10 border border-amber-500/20 rounded-lg">
-                                            <p className="text-amber-400 text-sm font-medium">
-                                                "Statistical analysis of cannabis test data shows clear, unnatural spikes in reported THC potency just above regulatory thresholds."
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr className="border-slate-800" />
-
-                                {/* The Solution Steps */}
-                                <div className="space-y-12">
-                                    <div className="text-center">
-                                        <h3 className="text-2xl font-bold text-white mb-4">Our Solution: 4 Simple Steps</h3>
-                                        <p className="text-slate-400 max-w-2xl mx-auto">
-                                            TrakPath turns compliance into verifiable trust without replacing any existing LIMS. We provide a simple mobile app and an external trust layer that creates a complete, cryptographically sealed chain-of-custody from field to lab door.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-                                        {/* Connector Line */}
-                                        <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-slate-800 z-0"></div>
-
-                                        {/* Step 1 */}
-                                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                                            <div className="w-20 h-20 bg-slate-900 border-2 border-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                                                <MapPin className="w-8 h-8 text-cyan-400" />
-                                            </div>
-                                            <h4 className="font-bold text-white text-lg">1. Collect</h4>
-                                            <p className="text-sm text-slate-400 px-2">
-                                                Submitter procures the sample in the field. High-resolution photo, exact timestamp, and GPS coordinates are anchored instantly.
-                                            </p>
-                                        </div>
-
-                                        {/* Step 2 */}
-                                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                                            <div className="w-20 h-20 bg-slate-900 border-2 border-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                                                <Smartphone className="w-8 h-8 text-cyan-400" />
-                                            </div>
-                                            <h4 className="font-bold text-white text-lg">2. Intake</h4>
-                                            <p className="text-sm text-slate-400 px-2">
-                                                Lab technician scans the incoming sample, instantly visualizes the original tamper-proof record, and verifies the physical match.
-                                            </p>
-                                        </div>
-
-                                        {/* Step 3 */}
-                                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                                            <div className="w-20 h-20 bg-slate-900 border-2 border-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                                                <Microscope className="w-8 h-8 text-cyan-400" />
-                                            </div>
-                                            <h4 className="font-bold text-white text-lg">3. Test</h4>
-                                            <p className="text-sm text-slate-400 px-2">
-                                                The laboratory proceeds with standard, rigorous analytical testing securely within their existing, uninterrupted LIMS workflow.
-                                            </p>
-                                        </div>
-
-                                        {/* Step 4 */}
-                                        <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                                            <div className="w-20 h-20 bg-slate-900 border-2 border-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                                                <FileText className="w-8 h-8 text-cyan-400" />
-                                            </div>
-                                            <h4 className="font-bold text-white text-lg">4. Verify</h4>
-                                            <p className="text-sm text-slate-400 px-2">
-                                                Any downstream entity can scan the final report for complete, end-to-end supply chain verification.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr className="border-slate-800" />
-
-                                {/* Outcomes */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="p-8 rounded-2xl bg-gradient-to-br from-cyan-900/20 to-slate-900 border border-cyan-900/50">
-                                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                            <CheckCircle2 className="w-5 h-5 text-cyan-400" /> Why This Matters
-                                        </h3>
-                                        <ul className="space-y-3 text-sm text-slate-300">
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                                                <span>When respected labs mandate TrakPath, covertly manipulating samples or engaging in lab shopping becomes mathematically impossible.</span>
-                                            </li>
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                                                <span>Labs gain defensible, visual proof during audits and can market "Verified from Field to COA" as a competitive advantage.</span>
-                                            </li>
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
-                                                <span>Regulators get the mathematical certainty they’ve been asking for, and honest operators win because bad actors are exposed.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <div className="p-8 rounded-2xl bg-gradient-to-br from-blue-900/20 to-slate-900 border border-blue-900/50">
-                                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                            <TrendingUp className="w-5 h-5 text-blue-400" /> Risks Eliminated & Capital Saved
-                                        </h3>
-                                        <ul className="space-y-3 text-sm text-slate-300">
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                                                <span><strong>Risk Reduction:</strong> Eliminates the single biggest source of audit failures related to chain-of-custody.</span>
-                                            </li>
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                                                <span><strong>Direct Savings:</strong> Avoids severe financial fines and replaces risky manual paperwork with a 2-second mobile scan.</span>
-                                            </li>
-                                            <li className="flex gap-2">
-                                                <ArrowRight className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-                                                <span><strong>Indirect Value:</strong> Reduces waste from operators sending duplicate samples and re-testing failed batches. Enables premium pricing for "verified chain" products.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                        )}
-
-                        {/* TAB 3: MARKET & ENGINE */}
-                        {activeTab === 'market' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-7xl mx-auto px-6 py-16 space-y-16">
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                    {/* TAM */}
-                                    <div className="space-y-6">
-                                        <h2 className="text-3xl font-extrabold text-white">Total Addressable Market</h2>
-                                        <p className="text-slate-400 leading-relaxed">
-                                            While we are initiating our launch in the highly regulated cannabis testing sector due to its QR-code culture and strict state-level regulations, the chain-of-custody pain point extends far beyond.
-                                        </p>
-                                        <div className="space-y-4">
-                                            <div className="p-4 bg-slate-900 border border-slate-700 rounded-xl">
-                                                <div className="text-2xl font-black text-cyan-400 mb-1">$860 Million</div>
-                                                <div className="text-sm font-bold text-white">U.S. Cannabis Testing Services Market (2025)</div>
-                                                <div className="text-xs text-slate-500 mt-1">Growing 11–17% annually.</div>
-                                            </div>
-                                            <div className="p-4 bg-slate-900 border border-slate-700 rounded-xl">
-                                                <div className="text-2xl font-black text-blue-400 mb-1">$5.4 Billion</div>
-                                                <div className="text-sm font-bold text-white">Global Environmental & Food Testing</div>
-                                                <div className="text-xs text-slate-500 mt-1">Adjacent expansion markets.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </main>
-                    
-                    {/* Universal Footer overlay logic */}
-                    <footer className="py-8 text-center border-t border-slate-800 text-slate-500 text-sm">
-                        <p>&copy; 2026 TrakPath LLC. All rights reserved.</p>
-                        <p className="text-cyan-600/70 font-semibold mt-1">U.S. Patent Pending (App No: 63/998,678) | Dynamic Identifier Hydration Engine</p>
-                    </footer>
-
-                    {/* --- MODAL SYSTEM --- */}
-                    {activeModal && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-                            {/* Backdrop */}
-                            <div 
-                                className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
-                                onClick={() => setActiveModal(null)}
-                            ></div>
-                            
-                            {/* Modal Box */}
-                            <div className="relative w-full max-w-2xl bg-slate-900 border border-cyan-500/40 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
-                                
-                                {/* Header */}
-                                <div className="flex justify-between items-center p-6 border-b border-slate-800 shrink-0">
-                                    <h3 className="text-2xl font-extrabold text-cyan-400">{MODAL_CONTENT[activeModal].title}</h3>
-                                    <button 
-                                        onClick={() => setActiveModal(null)}
-                                        className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full p-1 transition-colors"
-                                    >
-                                        <XIcon className="w-6 h-6" />
-                                    </button>
-                                </div>
-                                
-                                {/* Body */}
-                                <div className="p-6 overflow-y-auto text-slate-300 leading-relaxed">
-                                    {MODAL_CONTENT[activeModal].body}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
+        // --- Integrated Modal System ---
+        const modalData = {
+            contact: {
+                title: "Executive Team",
+                body: `<p class="mb-6 text-slate-400">Ready to deploy the Hydration Engine? Contact our executive team to schedule a technical demo or discuss investment opportunities.</p>
+                       <div class="grid sm:grid-cols-2 gap-4">
+                           ${[
+                               {n:'Josh McIver', e:'josh@mijory.com', p:'(208) 900-8666'},
+                               {n:'Ryan Pacheco', e:'ryan@mijory.com', p:'(208) 995-4681'},
+                               {n:'Mike Larsen', e:'mike@mijory.com', p:'(208) 703-5465'},
+                               {n:'Gaby Larsen', e:'gaby@mijory.com', p:'(208) 602-0894'}
+                           ].map(person => `
+                           <div class="p-4 bg-slate-800/50 border border-blue-500/20 rounded-xl hover:border-blue-500/50 transition">
+                               <h4 class="font-bold text-white mb-2 pb-2 border-b border-slate-700">${person.n}</h4>
+                               <div class="text-sm text-slate-400 flex justify-between mb-1"><span>Email:</span> <a href="mailto:${person.e}" class="text-blue-400 hover:underline">${person.e}</a></div>
+                               <div class="text-sm text-slate-400 flex justify-between mb-1"><span>Phone:</span> <a href="tel:${person.p.replace(/\\D/g,'')}" class="text-blue-400 hover:underline">${person.p}</a></div>
+                               <div class="text-sm text-slate-400 flex justify-between"><span>Location:</span> <span class="text-slate-300">Meridian, ID</span></div>
+                           </div>
+                           `).join('')}
+                       </div>`
+            },
+            thc: {
+                title: "🌿 Regulated THC",
+                body: "State-by-state compliance doesn't have to be a bottleneck. TrakPath streamlines the entire track-and-trace lifecycle by automating audits, compliance reporting, and recall readiness in real-time. We turn heavy regulatory friction into a seamless, mobile-first operational asset."
+            },
+            kratom: {
+                title: "🍃 Kratom Supply Chain",
+                body: "A rapidly growing, fragmented market demands verified sourcing. Provide undeniable proof of origin, processing history, and lab-tested safety to both vendors and consumers directly via a simple smartphone scan."
+            },
+            pharma: {
+                title: "🧬 Peptides & Pharma",
+                body: "Achieve unit-level DSCSA compliance without the architectural debt. Track temperature excursions and custody chains with mathematical certainty using our append-only provenance layer. No proprietary hardware required."
+            },
+            luxury: {
+                title: "💎 Luxury Goods Authentication",
+                body: "Defeat counterfeiting instantly. Empower buyers to verify the authentic digital birth certificate and immutable ownership history of high-end watches, fashion, and collectibles with a single tap of their smartphone."
+            },
+            mining: {
+                title: "⛏️ Mining & Minerals",
+                body: "From conflict-free mineral verification to bulk ore logistics, TrakPath provides an unbreakable digital thread from the initial extraction site all the way to the final manufacturer."
+            },
+            freight: {
+                title: "📦 High-Value Freight",
+                body: "Eliminate blind spots in transit. Automate custody transfers and condition monitoring across disparate carriers, ensuring absolute accountability and rapid reconciliation at every handoff."
+            }
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        function openModal(targetKey) {
+            const data = modalData[targetKey];
+            if (data) {
+                modalTitle.innerHTML = data.title;
+                modalBody.innerHTML = data.body;
+                modalOverlay.classList.add('active');
+                // Lock body scroll
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            // Unlock body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on background click
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
