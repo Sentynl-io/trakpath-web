@@ -74,6 +74,55 @@
             width: 2px; height: 2rem; background: rgba(255, 255, 255, 0.1);
         }
         .step-node:last-child::after { display: none; }
+
+        /* Efficiency Infographic CSS */
+        .stream-line {
+            background: linear-gradient(to bottom, #3b82f6 0%, #1d4ed8 50%, #3b82f6 100%);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .efficiency-line {
+            background: linear-gradient(to bottom, #10b981 0%, #059669 50%, #10b981 100%);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        .node-glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        .failure-node {
+            border: 1px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .efficiency-node {
+            border: 1px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .hydration-drop {
+            animation: drop-flow 3s infinite ease-in-out;
+        }
+        @keyframes drop-flow {
+            0% { transform: translateY(-20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(0px); opacity: 0; }
+        }
+        @keyframes pulse-blue {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-blue 4s infinite ease-in-out;
+        }
+        .geo-label {
+            font-family: monospace;
+            font-size: 10px;
+            color: #3b82f6;
+            letter-spacing: 1px;
+        }
+        .time-chip {
+            font-family: monospace;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body class="selection:bg-blue-500/30">
@@ -96,6 +145,7 @@
                 <button onclick="switchTab('features')" class="nav-link hover:text-white">Features</button>
                 <button onclick="switchTab('hydration')" class="nav-link hover:text-white">Hydration</button>
                 <button onclick="switchTab('coc')" class="nav-link hover:text-white">Chain of Custody</button>
+                <button onclick="switchTab('efficiency')" class="nav-link hover:text-white text-emerald-400">Efficiency</button>
                 <button onclick="switchTab('compliance')" class="nav-link hover:text-white">Compliance</button>
                 <button onclick="switchTab('faq')" class="nav-link hover:text-white">FAQ</button>
             </div>
@@ -431,6 +481,202 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="efficiency" class="tab-content pt-32 pb-24 px-6 max-w-7xl mx-auto">
+            <header class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black tracking-tighter mb-6 uppercase">
+                    TrakPath <span class="text-blue-500">Lifecycle</span>
+                </h2>
+                <p class="text-zinc-400 text-lg max-w-3xl mx-auto">
+                    One Label. Total Visibility. Compare the <strong>Technical Truth</strong> against <strong>Worker Efficiency Gains</strong>.
+                </p>
+            </header>
+
+            <div class="hidden lg:grid grid-cols-2 gap-20 mb-10 px-10">
+                <div class="text-center">
+                    <span class="text-blue-500 font-bold uppercase tracking-[0.2em] text-xs">Technical Supply Stream</span>
+                </div>
+                <div class="text-center">
+                    <span class="text-emerald-500 font-bold uppercase tracking-[0.2em] text-xs">Logistics & Time Comparison</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-20">
+                
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="absolute left-1/2 top-0 bottom-0 w-1 stream-line transform -translate-x-1/2 z-0"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="geo-label mb-1">43.6150° N, 116.2023° W</div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Primary Source</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full node-glow z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            <div class="absolute -top-8 hydration-drop"><svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg></div>
+                        </div>
+                        <div class="mt-4 p-3 failure-node rounded-xl text-center max-w-xs border-dashed">
+                            <div class="text-red-500 font-bold text-[9px] uppercase mb-1 flex items-center justify-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/></svg>
+                                Legacy Failure
+                            </div>
+                            <p class="text-[10px] text-zinc-500 italic">Manual logs allow falsified origin.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="geo-label mb-1">43.6532° N, 79.3832° W</div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Logistics Handover</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-blue-700 rounded-full node-glow z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0zM13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1"></path></svg>
+                        </div>
+                        <div class="mt-4 p-3 failure-node rounded-xl text-center max-w-xs border-dashed">
+                            <div class="text-red-500 font-bold text-[9px] uppercase mb-1 flex items-center justify-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/></svg>
+                                Legacy Failure
+                            </div>
+                            <p class="text-[10px] text-zinc-500 italic">Unverified transit leads to batch swapping.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="geo-label mb-1">34.0522° N, 118.2437° W</div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Lab Verification</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-blue-800 rounded-full node-glow z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86 7.717l.477 2.387a2 2 0 002.387 1.487l2.387-.477a2 2 0 001.487-2.387l-.477-2.387z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H2z"></path></svg>
+                        </div>
+                        <div class="mt-4 p-3 failure-node rounded-xl text-center max-w-xs border-dashed">
+                            <div class="text-red-500 font-bold text-[9px] uppercase mb-1 flex items-center justify-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/></svg>
+                                Legacy Failure
+                            </div>
+                            <p class="text-[10px] text-zinc-500 italic">Sample swapping enables result-shopping.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center group">
+                        <div class="text-center mb-4">
+                            <div class="geo-label mb-1">40.7128° N, 74.0060° W</div>
+                            <h3 class="text-xl font-bold text-green-400 uppercase tracking-tight">The Immutable Truth</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-20 h-20 bg-green-600 rounded-full node-glow z-20 animate-pulse-slow">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="absolute left-1/2 top-0 bottom-0 w-1 efficiency-line transform -translate-x-1/2 z-0"></div>
+                    
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="flex gap-2 justify-center mb-2">
+                                <span class="time-chip bg-red-900/40 text-red-400 border border-red-800">Legacy: 5m</span>
+                                <span class="time-chip bg-emerald-900/40 text-emerald-400 border border-emerald-800">TrakPath: 15s</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Worker: Supplier</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-emerald-600 rounded-full z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </div>
+                        <div class="mt-4 p-4 efficiency-node rounded-xl text-left max-w-sm glass border-dashed">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase">Optimization</h4>
+                                <span class="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">SAVE: 4m 45s</span>
+                            </div>
+                            <ul class="text-[10px] text-zinc-400 space-y-1.5">
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Replaces manual logbooks with instant GPS/photo hydration.</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> One static label is generated at source; never reprinted.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="flex gap-2 justify-center mb-2">
+                                <span class="time-chip bg-red-900/40 text-red-400 border border-red-800">Legacy: 10m</span>
+                                <span class="time-chip bg-emerald-900/40 text-emerald-400 border border-emerald-800">TrakPath: 3s</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Worker: Receiver</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-emerald-700 rounded-full z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div class="mt-4 p-4 efficiency-node rounded-xl text-left max-w-sm glass border-dashed">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase">Optimization</h4>
+                                <span class="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">SAVE: 9m 57s</span>
+                            </div>
+                            <ul class="text-[10px] text-zinc-400 space-y-1.5">
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Instant scan confirms manifest vs manual itemized counting.</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Auto-reconciliation hydrates receiving status instantly.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center mb-32 group">
+                        <div class="text-center mb-4">
+                            <div class="flex gap-2 justify-center mb-2">
+                                <span class="time-chip bg-red-900/40 text-red-400 border border-red-800">Legacy: 15m</span>
+                                <span class="time-chip bg-emerald-900/40 text-emerald-400 border border-emerald-800">TrakPath: 5s</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Worker: Lab Tech</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-16 h-16 bg-emerald-800 rounded-full z-20">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86 7.717l.477 2.387a2 2 0 002.387 1.487l2.387-.477a2 2 0 001.487-2.387l-.477-2.387z"></path></svg>
+                        </div>
+                        <div class="mt-4 p-4 efficiency-node rounded-xl text-left max-w-sm glass border-dashed">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase">Optimization</h4>
+                                <span class="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">SAVE: 14m 55s</span>
+                            </div>
+                            <ul class="text-[10px] text-zinc-400 space-y-1.5">
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Zero training: Mobile scan vs complex legacy database navigation.</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> CoA links directly to the label via the Hydration Engine™.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10 flex flex-col items-center group">
+                        <div class="text-center mb-4">
+                            <div class="flex gap-2 justify-center mb-2">
+                                <span class="time-chip bg-red-900/40 text-red-400 border border-red-800">Legacy: 4h+</span>
+                                <span class="time-chip bg-emerald-900/40 text-emerald-400 border border-emerald-800">TrakPath: 2s</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white uppercase tracking-tight">Worker: Auditor</h3>
+                        </div>
+                        <div class="relative flex items-center justify-center w-20 h-20 bg-emerald-600 rounded-full node-glow z-20 animate-pulse-slow">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        </div>
+                        <div class="mt-4 p-4 efficiency-node rounded-xl text-left max-w-sm glass border-dashed">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase">Optimization</h4>
+                                <span class="text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">SAVE: ~4 Hours</span>
+                            </div>
+                            <ul class="text-[10px] text-zinc-400 space-y-1.5">
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Replaces file-digging with a single-scan audit reconstruction.</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">»</span> Cryptographic proof provides defensibility without manual work.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-20 glass p-10 rounded-[2.5rem] border-blue-500/20 text-center">
+                <h2 class="text-2xl font-bold mb-4 uppercase tracking-tighter">Total Operational Impact: <span class="text-blue-500">95% Efficiency Gain</span></h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                    <div><div class="text-blue-400 font-bold text-2xl tracking-tighter">Instant</div><div class="text-[10px] uppercase text-zinc-500 font-bold">Verification</div></div>
+                    <div><div class="text-blue-400 font-bold text-2xl tracking-tighter">Zero</div><div class="text-[10px] uppercase text-zinc-500 font-bold">Relabeling</div></div>
+                    <div><div class="text-blue-400 font-bold text-2xl tracking-tighter">&lt;15s</div><div class="text-[10px] uppercase text-zinc-500 font-bold">Data Entry</div></div>
+                    <div><div class="text-blue-400 font-bold text-2xl tracking-tighter">100%</div><div class="text-[10px] uppercase text-zinc-500 font-bold">Audit-Ready</div></div>
                 </div>
             </div>
         </section>
@@ -840,7 +1086,7 @@
                                {n:'Josh McIver', e:'josh@mijory.com'},
                                {n:'Ryan Pacheco', e:'ryan@mijory.com'},
                                {n:'Mike Larsen', e:'mike@mijory.com'},
-                               {n:'Gaby Larsen', e:'gaby@mijory.com'}
+                               {n:'Ryan Muckenthaler', e:'ryanm@mijory.com'}
                            ].map(p => `
                            <div class="p-4 bg-white/5 border border-white/10 rounded-xl">
                                <h4 class="font-bold text-white mb-1">${p.n}</h4>
