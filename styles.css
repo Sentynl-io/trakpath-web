@@ -113,3 +113,78 @@ body {
 
 .scan-line { animation: scan-vertical 3s infinite ease-in-out; position: absolute; width: 100%; height: 2px; background: rgba(59, 130, 246, 0.5); }
 @keyframes scan-vertical { 0%, 100% { top: 0%; opacity: 0; } 50% { top: 100%; opacity: 1; } }
+
+
+/* =========================================
+   HYDRATION INFOGRAPHIC CSS
+   ========================================= */
+.phone-frame { 
+    box-shadow: 0 0 60px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(57, 255, 20, 0.08); 
+}
+.data-tag { 
+    font-family: monospace; font-size: 8px; background: #000; 
+    border: 1px solid rgba(57, 255, 20, 0.4); padding: 2px 8px; 
+    border-radius: 4px; color: #39FF14; white-space: nowrap; text-transform: uppercase;
+}
+
+/* Animated Code Beams */
+.code-beam {
+    position: absolute; height: 1px; font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px; font-weight: 900; white-space: nowrap; overflow: hidden;
+    letter-spacing: 2px; display: flex; align-items: center; z-index: 5; pointer-events: none;
+}
+.code-beam-green {
+    background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.6), transparent);
+    color: #39FF14; text-shadow: 0 0 12px #39FF14;
+}
+.code-beam-blue {
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.6), transparent);
+    color: #00F5FF; text-shadow: 0 0 12px #00F5FF;
+}
+
+@keyframes scroll-code { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.code-text { display: inline-block; animation: scroll-code 5s linear infinite; }
+.code-text-fast { display: inline-block; animation: scroll-code 2s linear infinite; }
+
+/* Glowing Custody Nodes */
+.custody-node {
+    padding: 8px 16px; border-radius: 14px; background: rgba(0, 0, 0, 0.95);
+    border: 1.5px solid rgba(57, 255, 20, 0.7); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; position: absolute; z-index: 30;
+    box-shadow: 0 0 25px rgba(57, 255, 20, 0.5); gap: 2px; overflow: hidden;
+}
+.node-label {
+    font-family: monospace; font-size: 8px; font-weight: 800; color: #39FF14;
+    text-transform: uppercase; line-height: 1.2; white-space: nowrap;
+}
+
+/* Typography & Visuals */
+.main-title {
+    font-size: 3rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.05em;
+    background: linear-gradient(to bottom, #fff 70%, rgba(255,255,255,0.4));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;
+}
+.subtitle-box {
+    display: inline-block; border: 1.5px solid #00E5FF; padding: 8px 24px;
+    border-radius: 6px; font-size: 1.1rem; font-weight: 800; color: #00E5FF;
+    text-transform: uppercase; letter-spacing: 0.4em; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    background: rgba(0, 229, 255, 0.08);
+}
+.mini-code-stream {
+    width: 50px; height: 6px; overflow: hidden; background: rgba(57, 255, 20, 0.15);
+    border-radius: 2px; margin-top: 2px;
+}
+.product-bottle { filter: drop-shadow(0 0 20px rgba(255,255,255,0.1)); }
+
+/* Green QR & Scan lines */
+@keyframes qr-pulse {
+    from { filter: drop-shadow(0 0 2px #39FF14); opacity: 0.8; }
+    to { filter: drop-shadow(0 0 8px #39FF14); opacity: 1; }
+}
+.qr-label-glow { animation: qr-pulse 2s infinite alternate; }
+
+.scan-line-green { 
+    animation: scan-vertical 2.5s infinite ease-in-out; 
+    position: absolute; width: 100%; height: 2px; 
+    background: #39FF14; box-shadow: 0 0 15px #39FF14; 
+}
