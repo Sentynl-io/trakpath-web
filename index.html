@@ -36,6 +36,12 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
         .nav-blur {
@@ -43,6 +49,17 @@
             background: rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        .source-link {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #3b82f6;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .source-link:hover { opacity: 0.7; }
 
         /* Snappy Tab Switching (No laggy fades) */
         .tab-content { display: none; }
@@ -84,20 +101,11 @@
             background: linear-gradient(to bottom, #10b981 0%, #059669 50%, #10b981 100%);
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
-        .node-glow {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
-        }
-        .failure-node {
-            border: 1px solid #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-        }
-        .efficiency-node {
-            border: 1px solid #10b981;
-            background: rgba(16, 185, 129, 0.1);
-        }
-        .hydration-drop {
-            animation: drop-flow 3s infinite ease-in-out;
-        }
+        .node-glow { box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+        .failure-node { border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .efficiency-node { border: 1px solid #10b981; background: rgba(16, 185, 129, 0.1); }
+        
+        .hydration-drop { animation: drop-flow 3s infinite ease-in-out; }
         @keyframes drop-flow {
             0% { transform: translateY(-20px); opacity: 0; }
             50% { opacity: 1; }
@@ -107,9 +115,8 @@
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.05); opacity: 0.8; }
         }
-        .animate-pulse-slow {
-            animation: pulse-blue 4s infinite ease-in-out;
-        }
+        .animate-pulse-slow { animation: pulse-blue 4s infinite ease-in-out; }
+        
         .geo-label {
             font-family: monospace;
             font-size: 10px;
@@ -140,8 +147,9 @@
                 </div>
                 <span class="text-xl font-black tracking-tighter uppercase">Trak<span class="text-blue-500">Path</span></span>
             </div>
-            <div class="hidden lg:flex space-x-6 text-sm font-medium text-zinc-400">
+            <div class="hidden xl:flex space-x-6 text-sm font-medium text-zinc-400">
                 <button onclick="switchTab('advantage')" class="nav-link hover:text-white">Advantage</button>
+                <button onclick="switchTab('crisis')" class="nav-link hover:text-white">Market Crisis</button>
                 <button onclick="switchTab('features')" class="nav-link hover:text-white">Features</button>
                 <button onclick="switchTab('hydration')" class="nav-link hover:text-white">Hydration</button>
                 <button onclick="switchTab('coc')" class="nav-link hover:text-white">Chain of Custody</button>
@@ -174,8 +182,8 @@
                         Discover the Advantage
                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
-                    <button onclick="switchTab('hydration')" class="glass-card text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10">
-                        How Hydration Works
+                    <button onclick="switchTab('crisis')" class="glass-card text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10">
+                        View Market Crisis
                     </button>
                 </div>
             </header>
@@ -226,6 +234,165 @@
                     </div>
                 </section>
             </div>
+        </section>
+
+        <section id="crisis" class="tab-content pt-32 pb-24 px-6 max-w-5xl mx-auto">
+            <header class="mb-24 text-center">
+                <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-8">
+                    <span>Market Intelligence</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.9] uppercase">
+                    The Crisis of<br />
+                    <span class="text-gradient">Fragmented Systems.</span>
+                </h1>
+                <p class="text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
+                    Current supply chain and compliance platforms are leaving global leaders frustrated. The core market complaint isn’t a lack of tools—it’s a lack of <span class="text-white font-semibold">truth, automation, and integration.</span>
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-network-wired text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">01</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“It’s still not truly end-to-end.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Platforms are often weak deeper in the network. Only 60% of respondents had comprehensive visibility of tier-1 suppliers, while deeper tier visibility declined for a second straight year.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5">
+                        <a href="https://www.mckinsey.com" target="_blank" class="source-link">Source: McKinsey & Company</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-puzzle-piece text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">02</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Integration is a nightmare.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Data quality and availability are the most common challenges. Data silos make it hard to stitch together procurement, logistics, manufacturing, and planning data.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5 flex gap-4">
+                        <a href="https://www.mckinsey.com" target="_blank" class="source-link">McKinsey</a>
+                        <a href="https://www.weforum.org" target="_blank" class="source-link">World Economic Forum</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-hand-paper text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">03</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Too much manual work.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Buyers still live in spreadsheets and manual evidence gathering. 88% of respondents still use manual processes often or sometimes despite paying for "automation."
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5">
+                        <a href="https://www.wolterskluwer.com" target="_blank" class="source-link">Source: Wolters Kluwer</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-gavel text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">04</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Lagging behind regulatory churn.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Rules change faster than systems. 85% say compliance requirements became more complex in 3 years, with 43% of CECOs seeing new rules as their #1 challenge.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5 flex gap-4">
+                        <a href="https://www.pwc.com" target="_blank" class="source-link">PwC</a>
+                        <a href="https://www.kpmg.com" target="_blank" class="source-link">KPMG</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-exchange-alt text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">05</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Weak interoperability.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Independent schemes cause reporting duplication and audit fatigue. Harmonized assessments and open traceability standards are critical for resource efficiency.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5 flex gap-4">
+                        <a href="https://www.weforum.org" target="_blank" class="source-link">WEF</a>
+                        <a href="https://www.gs1.org" target="_blank" class="source-link">GS1</a>
+                        <a href="https://www.intracen.org" target="_blank" class="source-link">ITC</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-chart-line text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">06</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Weaker ROI than promised.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        92% of supply chain leaders say tech investments have not fully delivered results. One-third lack quantified business cases for implementation.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5 flex gap-4">
+                        <a href="https://www.pwc.com" target="_blank" class="source-link">PwC</a>
+                        <a href="https://www.mckinsey.com" target="_blank" class="source-link">McKinsey</a>
+                    </div>
+                </div>
+
+                <div class="p-8 glass-card rounded-[2.5rem] flex flex-col md:col-span-2 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20">
+                            <i class="fas fa-users text-blue-400 text-lg"></i>
+                        </div>
+                        <span class="text-zinc-600 font-mono text-xs">07</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 uppercase tracking-tight">“Adoption is harder than vendors admit.”</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+                        Rollouts stall because users lack trust, skills, or time. People issues—skills shortages and change-management—are nearly as common as technical barriers. 90% of companies lack sufficient talent to meet digitization goals.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-white/5">
+                        <a href="https://www.mckinsey.com" target="_blank" class="source-link">Source: McKinsey & Company</a>
+                    </div>
+                </div>
+            </div>
+
+            <section class="mt-32 p-12 glass-card rounded-[3rem] border-blue-500/20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-blue-500/5 pointer-events-none"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 uppercase tracking-tighter">The Core Opportunity Gap.</h2>
+                    <p class="text-zinc-400 text-lg leading-relaxed mb-8">
+                        Current solutions are fragmented, manual, and too reactive. The clear market gap is for a system that combines <span class="text-white font-bold">multi-tier visibility</span>, <span class="text-white font-bold">regulatory change management</span>, and <span class="text-white font-bold">interoperable data</span> into one unified workflow.
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs uppercase font-bold tracking-widest text-zinc-300">Unified Workflow</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs uppercase font-bold tracking-widest text-zinc-300">Supplier-Friendly Evidence</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                            <span class="text-xs uppercase font-bold tracking-widest text-zinc-300">Automated Compliance</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
 
         <section id="features" class="tab-content pt-32 pb-24 px-6 max-w-7xl mx-auto">
