@@ -1,0 +1,115 @@
+:root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Advantage Design Language */
+.bg-glow-blue { background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%); }
+.bg-glow-indigo { background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%); }
+
+.text-gradient {
+    background: linear-gradient(to bottom, #fff, #52525b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.nav-blur {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.source-link {
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #3b82f6; text-decoration: none; transition: opacity 0.2s;
+}
+.source-link:hover { opacity: 0.7; }
+
+/* Snappy Tab Switching (Zero Lag) */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.nav-link.active { color: var(--primary); font-weight: 700; }
+
+/* Snappy FAQ */
+.faq-answer { display: none; }
+.faq-answer.active { display: block; }
+.faq-icon { transform: rotate(0deg); }
+.faq-icon.active { transform: rotate(180deg); }
+
+/* Snappy Modals */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+    justify-content: center; align-items: center; z-index: 1000; display: none; padding: 1rem;
+}
+.modal-overlay.active { display: flex; }
+.modal-content {
+    background: #0c0c0c; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem;
+    width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto;
+}
+
+/* Unified Node Chains */
+.step-node { position: relative; }
+.step-node::after {
+    content: ''; position: absolute; left: 50%; top: 100%;
+    width: 2px; height: 2rem; background: rgba(255, 255, 255, 0.1);
+}
+.step-node:last-child::after { display: none; }
+
+/* NEW: Efficiency Infographic Styles */
+.stream-line {
+    background: linear-gradient(to bottom, #3b82f6 0%, #1d4ed8 50%, #3b82f6 100%);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+.efficiency-line {
+    background: linear-gradient(to bottom, #10b981 0%, #059669 50%, #10b981 100%);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+.node-glow { box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+.failure-node { border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
+.efficiency-node { border: 1px solid #10b981; background: rgba(16, 185, 129, 0.1); }
+
+.hydration-drop { animation: drop-flow 3s infinite ease-in-out; }
+@keyframes drop-flow {
+    0% { transform: translateY(-20px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(0px); opacity: 0; }
+}
+
+.animate-pulse-slow { animation: pulse-blue 4s infinite ease-in-out; }
+@keyframes pulse-blue {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.geo-label { font-family: monospace; font-size: 10px; color: #3b82f6; letter-spacing: 1px; }
+.time-chip { font-family: monospace; font-size: 9px; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+
+.hydration-bridge {
+    position: absolute; height: 1px; z-index: 5; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.4), transparent);
+    font-family: 'JetBrains Mono', monospace; font-size: 7px; color: rgba(59, 130, 246, 0.6); white-space: nowrap; pointer-events: none;
+}
+.code-particle { animation: flow-left 5s infinite linear; }
+@keyframes flow-left { 0% { transform: translateX(100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateX(-100%); opacity: 0; } }
+
+.scan-line { animation: scan-vertical 3s infinite ease-in-out; position: absolute; width: 100%; height: 2px; background: rgba(59, 130, 246, 0.5); }
+@keyframes scan-vertical { 0%, 100% { top: 0%; opacity: 0; } 50% { top: 100%; opacity: 1; } }
