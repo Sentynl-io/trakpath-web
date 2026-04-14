@@ -214,3 +214,27 @@ body {
     90% { opacity: 1; }
     100% { transform: translateX(-100vw); opacity: 0; }
 }
+
+
+/* =========================================
+   ADVANTAGE TAB SPECIFIC STYLES
+   ========================================= */
+
+/* Infographic Timeline Styles */
+.timeline-item { position: relative; padding-left: 2rem; border-left: 1px solid rgba(255,255,255,0.1); }
+.timeline-dot { position: absolute; left: -5px; top: 0; width: 9px; height: 9px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+.legacy-bar { height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; position: relative; overflow: hidden; }
+.legacy-fill { height: 100%; background: #ef4444; opacity: 0.3; }
+.trak-dot { width: 12px; height: 12px; background: #3b82f6; border-radius: 2px; box-shadow: 0 0 15px #3b82f6; display: inline-block; }
+
+/* Smartphone Ease Illustration */
+.ease-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 2rem; border: 1px dashed rgba(59, 130, 246, 0.3); border-radius: 2rem; background: rgba(59, 130, 246, 0.02); }
+.phone-mockup { width: 80px; height: 150px; border: 3px solid rgba(255,255,255,0.1); border-radius: 12px; position: relative; display: flex; align-items: center; justify-content: center; background: #000; }
+.phone-mockup::after { content: ''; width: 20px; height: 2px; background: rgba(255,255,255,0.1); position: absolute; top: 10px; border-radius: 2px; }
+.phone-screen { width: 90%; height: 85%; background: #3b82f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.phone-screen::before { content: ''; position: absolute; width: 100%; height: 2px; background: white; top: 0; animation: scan-phone 2s linear infinite; }
+@keyframes scan-phone { 0% { top: 0; } 100% { top: 100%; } }
+
+.label-mockup { width: 60px; height: 60px; background: white; border-radius: 8px; padding: 6px; display: flex; align-items: center; justify-content: center; }
+.pain-point-item { border-left: 2px solid #ef4444; padding-left: 1.5rem; margin-bottom: 2rem; }
+.ai-chip-gradient { background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); }

@@ -1,169 +1,412 @@
 <div class="pt-32 pb-24 px-6 max-w-6xl mx-auto relative z-10">
-    
-    <div class="text-center mb-24">
-        <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-6">
+
+    <header class="text-center mb-24">
+        <div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-10">
             <span>Powered by Mijory</span>
         </div>
-        <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-6">The TrakPath <span class="text-blue-500">Advantage</span></h2>
-        <p class="text-zinc-400 text-xl md:text-2xl max-w-2xl mx-auto font-light leading-relaxed">
-            One Label. <span class="text-white font-semibold">One Immutable Truth.</span>
-        </p>
+        
+        <div class="flex justify-center mb-8">
+            <svg width="400" height="130" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]">
+                <rect x="50" y="50" width="100" height="100" rx="28" fill="#3b82f6" />
+                <path d="M90 75 L115 100 L90 125" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <text x="170" y="128" font-family="Inter, sans-serif" font-weight="900" font-size="68" letter-spacing="-2">
+                    <tspan fill="white">TRAK</tspan>
+                    <tspan fill="#3b82f6">PATH</tspan>
+                </text>
+            </svg>
+        </div>
+        
+        <h2 class="text-xl md:text-3xl font-light text-zinc-400 mb-16 tracking-tight">
+            One Label. <span class="text-white font-bold italic">One Immutable Truth.</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden">
+                <div class="scan-line opacity-20"></div>
+                <div class="text-4xl font-bold text-white mb-1 uppercase tracking-tighter">Zero</div>
+                <div class="text-[10px] text-blue-400 font-bold uppercase tracking-[0.2em]">Hardware Overhead</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="text-4xl font-bold text-white mb-1 tracking-tighter">95%</div>
+                <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-[0.2em]">Efficiency Gain</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="text-4xl font-bold text-white mb-1 tracking-tighter">100%</div>
+                <div class="text-[10px] text-purple-400 font-bold uppercase tracking-[0.2em]">Audit Readiness</div>
+            </div>
+        </div>
+    </header>
 
-        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mt-16">
-            <div class="text-center">
-                <div class="text-5xl md:text-6xl font-black text-white mb-3 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">ZERO</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Hardware Cost</div>
+    <section class="mb-32">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="flex items-center gap-4 mb-6">
+                    <i class="fas fa-mobile-button text-blue-500 text-xl"></i>
+                    <h3 class="text-2xl font-bold tracking-tight uppercase text-white">The Frictionless Edge</h3>
+                </div>
+                <p class="text-zinc-400 text-lg mb-8 font-light leading-relaxed">
+                    TrakPath eliminates the need for proprietary hardware. Any worker, anywhere, can secure the supply chain using the device already in their pocket.
+                </p>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                            <i class="fas fa-qrcode text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Standard QR/Barcode Compatibility</h4>
+                            <p class="text-sm text-zinc-500 mt-1">Works with existing labeling workflows. No special ink or RFID chips required.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                            <i class="fas fa-hand-pointer text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Single-Tap Hydration</h4>
+                            <p class="text-sm text-zinc-500 mt-1">One scan triggers GPS, time-stamping, and photo-anchoring in under 15 seconds.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                            <i class="fas fa-wifi text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Offline-Ready Sync</h4>
+                            <p class="text-sm text-zinc-500 mt-1">Captures data in remote zones and hydrates the ledger as soon as connectivity is restored.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="w-px h-20 bg-white/10 hidden md:block"></div>
-            <div class="text-center">
-                <div class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-cyan-500 mb-3 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">95%</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Efficiency Gain</div>
+            <div class="ease-container relative overflow-hidden glass-card">
+                <h4 class="text-white font-bold mb-8 uppercase tracking-[0.3em] text-xs">Mobile First</h4>
+                <div class="flex items-center justify-center gap-8 md:gap-12">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="label-mockup shadow-[0_0_20px_rgba(255,255,255,0.1)] text-black">
+                            <i class="fas fa-qrcode text-4xl"></i>
+                        </div>
+                        <span class="text-[10px] text-zinc-400 uppercase tracking-widest font-bold">Existing Label</span>
+                    </div>
+                    <div class="flex items-center text-blue-500 animate-pulse text-xl">
+                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="phone-mockup">
+                            <div class="phone-screen">
+                                <i class="fas fa-camera text-3xl"></i>
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-blue-400 uppercase tracking-widest font-bold">SmartPhone Only</span>
+                    </div>
+                </div>
             </div>
-            <div class="w-px h-20 bg-white/10 hidden md:block"></div>
-            <div class="text-center">
-                <div class="text-5xl md:text-6xl font-black text-white mb-3 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">100%</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Audit-Ready</div>
+        </div>
+    </section>
+    
+    <section class="mb-32 glass-card p-10 md:p-16 rounded-[3rem]">
+        <div class="flex items-center gap-4 mb-12">
+            <i class="fas fa-bolt-lightning text-blue-500 text-xl"></i>
+            <h3 class="text-2xl font-bold tracking-tight uppercase text-white">The Speed of Truth</h3>
+        </div>
+        
+        <div class="space-y-12">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Step 01</span>
+                        <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-location-dot text-xs text-zinc-500"></i> Source Hydration
+                        </h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-mono text-xs text-zinc-500">Legacy: 5m+</span>
+                        <span class="font-mono text-xs text-blue-400 font-bold ml-4">TrakPath: 15s</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="legacy-bar flex-grow"><div class="legacy-fill w-[100%]"></div></div>
+                    <div class="trak-dot shrink-0"></div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Step 02</span>
+                        <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-box-archive text-xs text-zinc-500"></i> Custodial Anchoring
+                        </h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-mono text-xs text-zinc-500">Legacy: 10m+</span>
+                        <span class="font-mono text-xs text-blue-400 font-bold ml-4">TrakPath: 3s</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="legacy-bar flex-grow"><div class="legacy-fill w-[100%]"></div></div>
+                    <div class="trak-dot shrink-0"></div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Step 03</span>
+                        <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-file-signature text-xs text-zinc-500"></i> Verified CoA Record
+                        </h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-mono text-xs text-zinc-500">Legacy: 15m+</span>
+                        <span class="font-mono text-xs text-blue-400 font-bold ml-4">TrakPath: 5s</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="legacy-bar flex-grow"><div class="legacy-fill w-[100%]"></div></div>
+                    <div class="trak-dot shrink-0"></div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest block mb-1">Step 04</span>
+                        <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fas fa-magnifying-glass-chart text-xs text-zinc-500"></i> Audit Reconstruction
+                        </h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-mono text-xs text-zinc-500">Legacy: 4h+</span>
+                        <span class="font-mono text-xs text-blue-400 font-bold ml-4">TrakPath: 2s</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="legacy-bar flex-grow"><div class="legacy-fill w-[100%]"></div></div>
+                    <div class="trak-dot shrink-0"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-32">
+        <div class="flex items-center gap-4 mb-12">
+            <i class="fas fa-skull-crossbones text-red-500 text-xl"></i>
+            <h3 class="text-2xl font-bold tracking-tight uppercase text-white">The Legacy Burden</h3>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-x-16 gap-y-4">
+            <div class="pain-point-item">
+                <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-tight">01. Manual Inaccuracy</h4>
+                <p class="text-zinc-400 text-sm leading-relaxed">Paper logs and manual spreadsheet entries are highly susceptible to human error and intentional padding of bulk materials.</p>
+            </div>
+            <div class="pain-point-item">
+                <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-tight">02. Information Silos</h4>
+                <p class="text-zinc-400 text-sm leading-relaxed">Documentation is often trapped in physical manifests or disconnected local databases, making real-time oversight impossible.</p>
+            </div>
+            <div class="pain-point-item">
+                <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-tight">03. High CAPEX Bloat</h4>
+                <p class="text-zinc-400 text-sm leading-relaxed">Traditional tracking requires expensive RFID tags, specialized scanners, and heavy infrastructure that is difficult to scale.</p>
+            </div>
+            <div class="pain-point-item">
+                <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-tight">04. Audit Liability</h4>
+                <p class="text-zinc-400 text-sm leading-relaxed">The "pencils-up" phenomenon: audits take days or weeks of forensic reconstruction, leaving firms vulnerable to regulatory fines.</p>
+            </div>
+            <div class="pain-point-item md:col-span-2 max-w-2xl">
+                <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-tight">05. Chain of Custody Blindspots</h4>
+                <p class="text-zinc-400 text-sm leading-relaxed">Unverified transit periods create "black boxes" where batch swapping and test-shopping occur without detection.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-32">
+        <div class="flex items-center gap-4 mb-12">
+            <i class="fas fa-layer-group text-blue-500 text-xl"></i>
+            <h3 class="text-2xl font-bold tracking-tight uppercase text-white">Agile Integration Architecture</h3>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="glass-card rounded-[2.5rem] p-10 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 opacity-[0.03]">
+                    <i class="fas fa-circle-nodes text-[12rem] text-blue-500"></i>
+                </div>
+                <div class="relative z-10">
+                    <span class="bg-blue-500/10 text-blue-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 inline-block border border-blue-500/20">Option A</span>
+                    <h4 class="text-2xl font-bold text-white mb-4">Standalone Ecosystem</h4>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">
+                        Deploy TrakPath as your primary supply chain nervous system. From source hydration to final delivery, manage the entire lifecycle with zero external dependencies.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">Rapid Go-Live in under 48 hours</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">Built-in immutable ledger storage</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-emerald-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">Native mobile-first administration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-[2.5rem] p-10 relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 opacity-[0.03]">
+                    <i class="fas fa-bridge text-[12rem] text-blue-500"></i>
+                </div>
+                <div class="relative z-10">
+                    <span class="bg-blue-500/10 text-blue-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 inline-block border border-blue-500/20">Option B</span>
+                    <h4 class="text-2xl font-bold text-white mb-4">Legacy Augmentation</h4>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">
+                        Seamlessly "hydrate" your existing ERP, SAP, or WMS. TrakPath acts as a high-fidelity security layer that secures legacy gaps without a "rip-and-replace" cycle.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-link text-blue-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">API-first bridge for WMS/ERP sync</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-link text-blue-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">Secures unverified manual entry gaps</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-link text-blue-500 text-sm"></i>
+                            <span class="text-sm text-zinc-300">Hydrates existing data with GPS/Photos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 p-8 glass-card rounded-3xl border-dashed border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex flex-col items-center gap-2 z-10">
+                <div class="p-5 rounded-xl bg-[#0c0c0c] border border-white/10">
+                    <i class="fas fa-database text-zinc-500 text-2xl"></i>
+                </div>
+                <span class="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">Legacy System</span>
+            </div>
+            <div class="flex-grow h-px bg-gradient-to-r from-zinc-800 via-blue-500 to-zinc-800 relative w-full md:w-auto my-8 md:my-0">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="p-3 rounded-xl bg-black border border-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                        <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100" height="100" rx="20" fill="#3b82f6" />
+                            <path d="M25 40 L50 65 L25 90" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-center gap-2 z-10">
+                <div class="p-5 rounded-xl bg-blue-500/10 border border-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                    <i class="fas fa-shield-check text-blue-400 text-2xl"></i>
+                </div>
+                <span class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Immutable Truth</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-32">
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div class="flex items-center gap-4">
+                <i class="fas fa-wand-magic-sparkles text-purple-400 text-xl"></i>
+                <h3 class="text-2xl font-bold tracking-tight uppercase text-white">Next-Gen AI Roadmap</h3>
+            </div>
+            <span class="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase tracking-widest border border-purple-500/30 w-max">
+                Coming Soon
+            </span>
+        </div>
+
+        <p class="text-zinc-400 max-w-2xl mb-12 font-light leading-relaxed">TrakPath uses AI to supercharge the Hydration Engine and turn real-time data reconstruction into intelligent, predictive compliance.</p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-card p-8 rounded-[2rem] ai-chip-gradient border-purple-500/20 group hover:border-purple-500/50 transition-all cursor-default h-full flex flex-col">
+                <h4 class="text-blue-400 font-bold text-sm uppercase tracking-tight mb-3">Smart Scan Intelligence</h4>
+                <p class="text-xs text-zinc-400 leading-relaxed">Instantly analyzes photos, GPS, and metadata for anomalies, potential fraud, or inconsistencies.</p>
+            </div>
+            <div class="glass-card p-8 rounded-[2rem] ai-chip-gradient border-purple-500/20 group hover:border-purple-500/50 transition-all cursor-default h-full flex flex-col">
+                <h4 class="text-blue-400 font-bold text-sm uppercase tracking-tight mb-3">Fraud & Anomaly Detection</h4>
+                <p class="text-xs text-zinc-400 leading-relaxed">Detects test-shopping, GPS spoofing, material swapping, and photo tampering. Flags or blocks movements automatically.</p>
+            </div>
+            <div class="glass-card p-8 rounded-[2rem] ai-chip-gradient border-purple-500/20 group hover:border-purple-500/50 transition-all cursor-default h-full flex flex-col">
+                <h4 class="text-blue-400 font-bold text-sm uppercase tracking-tight mb-3">Natural Language Dashboard</h4>
+                <p class="text-xs text-zinc-400 leading-relaxed">Ask questions in plain English <span class="text-white italic">"Show me all high-risk batches this week"</span> for instant answers.</p>
+            </div>
+            <div class="glass-card p-8 rounded-[2rem] ai-chip-gradient border-purple-500/20 group hover:border-purple-500/50 transition-all cursor-default h-full flex flex-col">
+                <h4 class="text-blue-400 font-bold text-sm uppercase tracking-tight mb-3">Predictive Compliance</h4>
+                <p class="text-xs text-zinc-400 leading-relaxed">Anticipates regulatory changes and batch risks across the supply chain before issues arise.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid md:grid-cols-2 gap-8 mb-32">
+        <div class="p-10 rounded-[2.5rem] bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20 relative overflow-hidden group">
+            <div class="absolute -right-10 -bottom-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500">
+                <i class="fas fa-microchip text-[12rem] text-blue-400"></i>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-blue-500/20 border border-blue-500/40 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                        <i class="fas fa-dna text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white tracking-tight uppercase">Hydration Engine™</h3>
+                </div>
+                <p class="text-zinc-400 leading-relaxed mb-8">
+                    The bedrock of the TrakPath protocol. A dual-layer architecture combining high-speed relational scans with an immutable decentralized ledger.
+                </p>
+                <ul class="space-y-3 text-sm font-medium text-zinc-300">
+                    <li class="flex items-center gap-3"><i class="fas fa-link text-blue-500 text-[10px]"></i> One Label; Infinite Updates</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-link text-blue-500 text-[10px]"></i> Zero Re-entry Data Persistence</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-link text-blue-500 text-[10px]"></i> Immutable Chain of Custody</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="p-10 rounded-[2.5rem] bg-gradient-to-br from-purple-600/10 to-transparent border border-purple-500/20 relative overflow-hidden group">
+            <div class="absolute -right-10 -bottom-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500">
+                <i class="fas fa-brain text-[12rem] text-purple-400"></i>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-purple-500/20 border border-purple-500/40 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <i class="fas fa-robot text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white tracking-tight uppercase">AI Guardrails</h3>
+                </div>
+                <p class="text-zinc-400 leading-relaxed mb-8">
+                    Predictive compliance monitoring that watches every hydration event. Our AI detects fraud, impossible logistics, or metadata inconsistencies.
+                </p>
+                <ul class="space-y-3 text-sm font-medium text-zinc-300">
+                    <li class="flex items-center gap-3"><i class="fas fa-eye text-purple-500 text-[10px]"></i> Anomaly Detection Engine</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-eye text-purple-500 text-[10px]"></i> Fraud Prevention Triggers</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-eye text-purple-500 text-[10px]"></i> Real-time Compliance Scoring</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center relative">
+        <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+            <div class="w-64 h-64 bg-blue-500 rounded-full blur-[100px]"></div>
+        </div>
+        <div class="relative z-10">
+            <h4 class="text-3xl md:text-4xl font-black text-white mb-6 tracking-tighter uppercase">Own the Source. Secure the Future.</h4>
+            <p class="text-zinc-400 mb-10 max-w-lg mx-auto leading-relaxed">
+                Stop relying on "pencils-up" audit reports. Transition to a real-time truth engine powered by Mijory.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <button onclick="openModal('contact')" class="px-10 py-4 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors uppercase tracking-tight text-sm">
+                    Request Protocol Access
+                </button>
+                <div class="px-10 py-4 border border-white/10 text-zinc-500 font-bold rounded-xl cursor-not-allowed uppercase text-sm">
+                    v1.4 Live
+                </div>
             </div>
         </div>
     </div>
-
-    <section class="mb-24">
-        <div class="flex items-center gap-4 mb-10">
-            <div class="h-8 w-1.5 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-            <h3 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter">Efficiency Gap</h3>
-        </div>
-        
-        <div class="glass-card rounded-[2rem] overflow-hidden p-1">
-            <div class="overflow-x-auto hide-scrollbar">
-                <table class="w-full text-left border-collapse min-w-[700px]">
-                    <thead>
-                        <tr class="border-b border-white/5 bg-black/40">
-                            <th class="p-6 text-zinc-500 uppercase text-xs tracking-widest font-bold">Workflow Stage</th>
-                            <th class="p-6 text-zinc-500 uppercase text-xs tracking-widest font-bold">Legacy Process</th>
-                            <th class="p-6 text-zinc-500 uppercase text-xs tracking-widest font-bold">TrakPath Time</th>
-                            <th class="p-6 text-right text-zinc-500 uppercase text-xs tracking-widest font-bold">Gain</th>
-                        </tr>
-                    </thead>
-                    <tbody class="font-mono text-sm">
-                        <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                            <td class="p-6 font-bold text-white font-sans uppercase tracking-tight">Source Hydration</td>
-                            <td class="p-6 text-zinc-400">5m+</td>
-                            <td class="p-6 text-blue-400 font-bold text-lg">15s</td>
-                            <td class="p-6 text-right text-emerald-400 font-black">~95%</td>
-                        </tr>
-                        <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                            <td class="p-6 font-bold text-white font-sans uppercase tracking-tight">Custodial Anchoring</td>
-                            <td class="p-6 text-zinc-400">10m+</td>
-                            <td class="p-6 text-blue-400 font-bold text-lg">3s</td>
-                            <td class="p-6 text-right text-emerald-400 font-black">~99%</td>
-                        </tr>
-                        <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                            <td class="p-6 font-bold text-white font-sans uppercase tracking-tight">Verified CoA Record</td>
-                            <td class="p-6 text-zinc-400">15m+</td>
-                            <td class="p-6 text-blue-400 font-bold text-lg">5s</td>
-                            <td class="p-6 text-right text-emerald-400 font-black">~99%</td>
-                        </tr>
-                        <tr class="hover:bg-white/[0.02] transition-colors">
-                            <td class="p-6 font-bold text-white font-sans uppercase tracking-tight">Audit Reconstruction</td>
-                            <td class="p-6 text-zinc-400">4h+</td>
-                            <td class="p-6 text-blue-400 font-bold text-lg">2s</td>
-                            <td class="p-6 text-right text-emerald-400 font-black">~99.9%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section class="mb-24">
-        <div class="flex items-center gap-4 mb-10">
-            <div class="h-8 w-1.5 bg-red-500 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
-            <h3 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter">Eliminating Legacy Failure Points</h3>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="glass-card p-8 rounded-[2rem] flex flex-col h-full hover:-translate-y-2 transition-all duration-300 hover:border-blue-500/30 group">
-                <div class="mb-8">
-                    <span class="bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex w-max items-center gap-2 mb-6">
-                        <i class="fas fa-triangle-exclamation"></i> Legacy Failure
-                    </span>
-                    <h4 class="text-xl font-black text-white uppercase tracking-tight mb-3 group-hover:text-blue-400 transition-colors">Falsified Origins</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">Manual logs allow padding bulk materials before ever reaching the lab.</p>
-                </div>
-                <div class="mt-auto pt-6 border-t border-white/10">
-                    <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest block mb-2 flex items-center gap-2"><i class="fas fa-check-circle"></i> The Solution</span>
-                    <p class="text-sm text-zinc-300 font-medium">Instant Photo/GPS Hydration ends manual entry.</p>
-                </div>
-            </div>
-
-            <div class="glass-card p-8 rounded-[2rem] flex flex-col h-full hover:-translate-y-2 transition-all duration-300 hover:border-blue-500/30 group">
-                <div class="mb-8">
-                    <span class="bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex w-max items-center gap-2 mb-6">
-                        <i class="fas fa-triangle-exclamation"></i> Legacy Failure
-                    </span>
-                    <h4 class="text-xl font-black text-white uppercase tracking-tight mb-3 group-hover:text-blue-400 transition-colors">Unverified Transit</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">Transit "black boxes" lead to high-risk batch swapping and loss.</p>
-                </div>
-                <div class="mt-auto pt-6 border-t border-white/10">
-                    <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest block mb-2 flex items-center gap-2"><i class="fas fa-check-circle"></i> The Solution</span>
-                    <p class="text-sm text-zinc-300 font-medium">Dual-layer digital scanning confirms manifests instantly.</p>
-                </div>
-            </div>
-
-            <div class="glass-card p-8 rounded-[2rem] flex flex-col h-full hover:-translate-y-2 transition-all duration-300 hover:border-blue-500/30 group">
-                <div class="mb-8">
-                    <span class="bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex w-max items-center gap-2 mb-6">
-                        <i class="fas fa-triangle-exclamation"></i> Legacy Failure
-                    </span>
-                    <h4 class="text-xl font-black text-white uppercase tracking-tight mb-3 group-hover:text-blue-400 transition-colors">Test Shopping & Fraud</h4>
-                    <p class="text-sm text-zinc-400 leading-relaxed">Falsified reports without tamper-proof ledger anchors.</p>
-                </div>
-                <div class="mt-auto pt-6 border-t border-white/10">
-                    <span class="text-emerald-400 text-[10px] font-black uppercase tracking-widest block mb-2 flex items-center gap-2"><i class="fas fa-check-circle"></i> The Solution</span>
-                    <p class="text-sm text-zinc-300 font-medium">Hydration Engine links digital CoA directly to the physical label.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="grid md:grid-cols-2 gap-8 mb-10">
-        <div class="p-10 rounded-[2.5rem] bg-gradient-to-br from-blue-900/20 to-slate-900/50 border border-blue-500/20 relative overflow-hidden group hover:border-blue-500/40 transition-colors">
-            <div class="absolute -right-10 -top-10 text-blue-500/10 text-9xl group-hover:scale-110 transition-transform duration-500"><i class="fas fa-microchip"></i></div>
-            <div class="relative z-10">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center border border-blue-500/30">
-                        <i class="fas fa-microchip text-blue-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-black text-white uppercase tracking-tighter">Hydration Engine™</h3>
-                </div>
-                <p class="text-zinc-400 mb-8 leading-relaxed">
-                    A dual-layer protocol combining high-speed relational scans with an append-only immutable ledger. 
-                </p>
-                <div class="bg-[#0c0c0c] p-6 rounded-2xl border border-white/5">
-                    <p class="text-blue-400 font-bold mb-2 text-xs uppercase tracking-widest">Key Logic</p>
-                    <p class="text-sm text-zinc-300 italic">"One label; infinite updates." Ensuring data integrity throughout the lifecycle.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="p-10 rounded-[2.5rem] bg-gradient-to-br from-purple-900/20 to-slate-900/50 border border-purple-500/20 relative overflow-hidden group hover:border-purple-500/40 transition-colors">
-            <div class="absolute -right-10 -top-10 text-purple-500/10 text-9xl group-hover:scale-110 transition-transform duration-500"><i class="fas fa-shield-halved"></i></div>
-            <div class="relative z-10">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center border border-purple-500/30">
-                        <i class="fas fa-shield-halved text-purple-400 text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-black text-white uppercase tracking-tighter">AI Guardrails</h3>
-                </div>
-                <p class="text-zinc-400 mb-8 leading-relaxed">
-                    Predictive compliance and anomaly detection monitoring every hydration event for fraud or inconsistency.
-                </p>
-                <div class="bg-[#0c0c0c] p-6 rounded-2xl border border-white/5">
-                    <p class="text-purple-400 font-bold mb-2 text-xs uppercase tracking-widest">Capability</p>
-                    <p class="text-sm text-zinc-300 italic">Identifies "impossible logistical moves" and triggers immediate alerts before transfers occur.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
 </div>
