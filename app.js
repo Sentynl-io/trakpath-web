@@ -4,12 +4,23 @@ const sections = ['home', 'advantage', 'crisis', 'features', 'hydration', 'coc',
 // Router: Fetches HTML files from the /sections/ folder on initial load
 document.addEventListener("DOMContentLoaded", async () => {
     const contentDiv = document.getElementById('main-content');
-    
+
     try {
         // Fetch all section partials concurrently for maximum speed
-        const fetchPromises = sections.map(sec => fetch(`sections/${sec}.html`).then(r => r.text()));
+        const fetchPromises = sections.map(sec =>
+            fetch(`sections/${sec}.html`).then(r => {
+                // If the file is missing or throws an error, catch it explicitly
+                if (!r.ok) {
+                    console.error(`Missing file: sections/${sec}.html`);
+                    return `<div class="text-center py-32 text-red-500 font-bold text-2xl uppercase tracking-widest">
+                        Error 404: sections/${sec}.html not found
+                    </div>`;
+                }
+                return r.text();
+            })
+        );
         const htmlContents = await Promise.all(fetchPromises);
-        
+
         sections.forEach((sec, index) => {
             const el = document.createElement(sec === 'home' ? 'main' : 'section');
             el.id = sec;
@@ -33,18 +44,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-white', 'text-emerald-400'));
-    
+
     const activeTab = document.getElementById(tabId);
     if (activeTab) {
         activeTab.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'instant' });
         history.replaceState(null, null, '#' + tabId);
     }
-    
+
     const links = document.querySelectorAll('.nav-link');
     links.forEach(link => {
-        if(link.getAttribute('onclick').includes(tabId)) {
-            if(tabId === 'efficiency') {
+        if (link.getAttribute('onclick').includes(tabId)) {
+            if (tabId === 'efficiency') {
                 link.classList.add('active', 'text-emerald-400');
             } else {
                 link.classList.add('active', 'text-white');
@@ -58,7 +69,7 @@ function toggleFAQ(button) {
     const answer = button.nextElementSibling;
     const icon = button.querySelector('.faq-icon');
     const isCurrentlyActive = answer.classList.contains('active');
-    
+
     // Close all others
     document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('active'));
@@ -95,11 +106,11 @@ const modalData = {
         body: `<p class="mb-6">Ready to deploy the Hydration Engine? Contact our team to schedule a technical demo.</p>
                <div class="grid sm:grid-cols-2 gap-4">
                    ${[
-                       {n:'Josh McIver', e:'josh@mijory.com'},
-                       {n:'Ryan Pacheco', e:'ryan@mijory.com'},
-                       {n:'Mike Larsen', e:'mike@mijory.com'},
-                       {n:'Ryan Muckenthaler', e:'ryanm@mijory.com'}
-                   ].map(p => `
+                { n: 'Josh McIver', e: 'josh@mijory.com' },
+                { n: 'Ryan Pacheco', e: 'ryan@mijory.com' },
+                { n: 'Mike Larsen', e: 'mike@mijory.com' },
+                { n: 'Ryan Muckenthaler', e: 'ryanm@mijory.com' }
+            ].map(p => `
                    <div class="p-4 bg-white/5 border border-white/10 rounded-xl">
                        <h4 class="font-bold text-white mb-1">${p.n}</h4>
                        <a href="mailto:${p.e}" class="text-blue-400 text-sm hover:underline">${p.e}</a>
