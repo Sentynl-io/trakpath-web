@@ -1,5 +1,5 @@
 // Add or remove tabs from this list to automatically hook them into the site
-const sections = ['home', 'advantage', 'crisis', 'features', 'hydration', 'coc', 'efficiency', 'compliance', 'faq'];
+const sections = ['home', 'advantage', 'crisis', 'features', 'hydration', 'coc', 'efficiency', 'compliance', 'pricing', 'faq'];
 
 // Router: Fetches HTML files from the /sections/ folder on initial load
 document.addEventListener("DOMContentLoaded", async () => {
