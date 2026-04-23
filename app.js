@@ -1,5 +1,5 @@
 // Add or remove tabs from this list to automatically hook them into the site
-const sections = ['home', 'advantage', 'crisis', 'features', 'hydration', 'coc', 'efficiency', 'compliance', 'pricing', 'faq'];
+const sections = ['home', 'advantage', 'crisis', 'features', 'hydration', 'coc', 'efficiency', 'compliance', 'pricing', 'references', 'faq'];
 
 // Router: Fetches HTML files from the /sections/ folder on initial load
 document.addEventListener("DOMContentLoaded", async () => {
@@ -144,3 +144,13 @@ document.addEventListener('click', (e) => {
     const modalOverlay = document.getElementById('modalOverlay');
     if (e.target === modalOverlay) closeModal();
 });
+
+window.copyEmailToClipboard = function(btn, email) {
+    navigator.clipboard.writeText(email).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check-circle text-emerald-400"></i> Copied';
+        setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy email: ', err);
+    });
+};
