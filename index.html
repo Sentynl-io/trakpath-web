@@ -26,9 +26,9 @@
     </div>
 
     <nav class="fixed w-full z-50 nav-blur top-0 border-b border-white/5">
-        <div class="max-w-[1400px] mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6 py-4 flex justify-between items-center gap-6">
             
-            <div class="flex items-center gap-2 cursor-pointer group" onclick="switchTab('home'); closeMobileMenu()">
+            <div class="flex items-center gap-2 cursor-pointer group shrink-0" onclick="switchTab('home'); closeMobileMenu()">
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-500 transition-colors shrink-0">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
@@ -37,7 +37,7 @@
                 <span class="text-xl font-black tracking-tighter uppercase hidden sm:block">Trak<span class="text-blue-500">Path</span></span>
             </div>
 
-            <div class="hidden xl:flex space-x-6 text-sm font-medium text-zinc-400">
+            <div class="hidden xl:flex justify-center gap-4 2xl:gap-6 text-[13px] 2xl:text-sm font-medium text-zinc-400 whitespace-nowrap">
                 <button onclick="switchTab('advantage')" class="nav-link hover:text-white transition-colors">Advantage</button>
                 <button onclick="switchTab('crisis')" class="nav-link hover:text-white transition-colors">Market Crisis</button>
                 <button onclick="switchTab('features')" class="nav-link hover:text-white transition-colors">Features</button>
@@ -50,7 +50,7 @@
                 <button onclick="switchTab('faq')" class="nav-link hover:text-white transition-colors">FAQ</button>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 shrink-0">
                 <button onclick="openModal('contact')" class="hidden md:block border border-zinc-700 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-colors whitespace-nowrap">
                     Contact Team
                 </button>

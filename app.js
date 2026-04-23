@@ -109,7 +109,6 @@ const modalData = {
                 { n: 'Josh McIver', e: 'josh@mijory.com' },
                 { n: 'Ryan Pacheco', e: 'ryan@mijory.com' },
                 { n: 'Mike Larsen', e: 'mike@mijory.com' },
-                { n: 'Ryan Muckenthaler', e: 'ryanm@mijory.com' }
             ].map(p => `
                    <div class="p-4 bg-white/5 border border-white/10 rounded-xl">
                        <h4 class="font-bold text-white mb-1">${p.n}</h4>
